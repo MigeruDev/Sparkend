@@ -1,0 +1,4 @@
+.active .nav-link  {
+    background-color: #3E50B4 !important; /*Violet Blue*/
+    box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(67, 54, 244, 0.4);
+}

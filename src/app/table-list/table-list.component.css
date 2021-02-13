@@ -1,0 +1,93 @@
+.example-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+}
+
+.example-header {
+  min-height: 64px;
+  padding: 8px 24px 0;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+.mat-table {
+  overflow: auto;
+  max-height: 500px;
+}
+
+.example-radio-group {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.example-radio-button {
+  color: #F4F4F9 !important;  /*White Smoke */
+  margin: 5px;
+}
+
+.example-selected-value {
+  margin: 15px 0;
+}
+
+
+
+/***************************************************************/
+/* Mat Expansion CSS*/
+
+mat-expansion-panel-header {
+  padding-left: 0px;
+}
+
+mat-radio-button{
+  color: #F4F4F9 !important;  /*White Smoke */
+}
+
+.card-expansion {
+  background-color: #3E50B4; /*Violet Blue*/
+}
+
+h4.card-category{
+  color: #F4F4F9 !important;  /*White Smoke */
+}
+
+.mat-radio-label-content{
+  color: #F4F4F9 !important;  /*White Smoke */
+}
+
+
+/***************************************************************/
+/* Mat Rows&Columns CSS*/
+
+.mat-column-id {
+  flex: 0 0 20% !important;
+  width: 20% !important;
+}
+
+.mat-column-flightnum {
+  flex: 0 0 15% !important;
+  width: 15% !important;
+}
+
+.mat-column-year {
+  flex: 0 0 7% !important;
+  width: 7% !important;
+}
+
+.mat-column-origin {
+  flex: 0 0 10% !important;
+  width: 10% !important;
+}
+
+.mat-column-dest {
+  flex: 0 0 10% !important;
+  width: 10% !important;
+}
+
+.mat-column-deptime {
+  flex: 0 0 20% !important;
+  width: 20% !important;
+}

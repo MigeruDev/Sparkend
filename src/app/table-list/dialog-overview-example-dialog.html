@@ -1,0 +1,27 @@
+<h1 mat-dialog-title>ID {{data._id}}</h1>
+<div mat-dialog-content>
+  <p>Actualice las entradas del vuelo</p>
+  <mat-form-field>
+    <input matInput placeholder="Año" [(ngModel)]="data.Year">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Número de vuelo" [(ngModel)]="data.FlightNum">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Origen" [(ngModel)]="data.Origin">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Destino" [(ngModel)]="data.Dest">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Departure Time" [(ngModel)]="data.DepTime">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Cancelado" [(ngModel)]="data.Cancelled">
+  </mat-form-field>
+  
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+</div>
