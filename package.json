@@ -1,6 +1,6 @@
 {
-  "name": "simplemongocrud_frontend",
-  "version": "2.1.0",
+  "name": "sparkend",
+  "version": "0.1.0",
   "license": "MIT",
   "scripts": {
     "ng": "ng",

@@ -121,6 +121,6 @@ export class NavbarComponent implements OnInit {
               return this.listTitles[item].title;
           }
       }
-      return 'Simple MongoDB CRUD example - BigData signature nov/2020';
+      return 'SPARK-HADOOP final project - BigData signature feb/2021';
     }
 }
