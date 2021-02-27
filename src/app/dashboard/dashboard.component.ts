@@ -4,6 +4,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { RestService } from '../rest.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as Chartist from 'chartist';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-dashboard',
@@ -82,7 +83,7 @@ export class DashboardComponent implements OnInit {
       seq = 0;
   };
 
-  startAnimationForBarChart(chart){
+  startAnimationForBarChart(chart, style={}){
       let seq2: any, delays2: any, durations2: any;
 
       seq2 = 0;
@@ -91,6 +92,7 @@ export class DashboardComponent implements OnInit {
       chart.on('draw', function(data) {
         if(data.type === 'bar'){
             seq2++;
+            data.element.attr(style);
             data.element.animate({
               opacity: {
                 begin: seq2 * delays2,
@@ -156,37 +158,8 @@ export class DashboardComponent implements OnInit {
 
 
 
-      /* ----------==========     Emails Subscription Chart initialization    ==========---------- */
-
-      var datawebsiteViewsChart = {
-        labels: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
-        series: [
-          [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895]
-
-        ]
-      };
-      var optionswebsiteViewsChart = {
-          axisX: {
-              showGrid: false
-          },
-          low: 0,
-          high: 1000,
-          chartPadding: { top: 0, right: 5, bottom: 0, left: 0}
-      };
-      var responsiveOptions: any[] = [
-        ['screen and (max-width: 640px)', {
-          seriesBarDistance: 5,
-          axisX: {
-            labelInterpolationFnc: function (value) {
-              return value[0];
-            }
-          }
-        }]
-      ];
-      var websiteViewsChart = new Chartist.Bar('#websiteViewsChart', datawebsiteViewsChart, optionswebsiteViewsChart, responsiveOptions);
-
-      //start animation for the Emails Subscription Chart
-      this.startAnimationForBarChart(websiteViewsChart);
+      /* ----------==========     Historico de vuelos no cancelados    ==========---------- */
+      this.drawQuery10();      
   }
   
   ngAfterViewInit() {
@@ -202,6 +175,92 @@ export class DashboardComponent implements OnInit {
     });*/
     this.dataSource8.data = this.rest.getDelayCount("eigth");
     this.dataSource9.data = this.rest.getDelayCount("ninth");
+  }
+
+  /* ----------==========     Historico de vuelos no cancelados    ==========---------- */
+  drawQuery10() {
+
+    /*this.rest.getDelayCount(arr_dep).subscribe((data: any[]) => {
+      this.dataSource.data = data
+      console.log(data)
+    });*/
+
+    var q10 = this.rest.getNotCancelledFlights();
+    
+    var dataQuery10 = {
+      labels: [],
+      series: [
+        []
+      ]
+    };
+    
+    q10.forEach( (element) => {
+      dataQuery10.labels.push(element.Time);
+      dataQuery10.series[0].push(element.count);
+    });    
+
+
+    var optionsQuery10 = {
+        axisX: {
+            showGrid: false
+        },
+        axisY: {
+            showLabel: true,
+            scaleMinSpace: 15,
+        },
+        low: 0,
+        high: 2100,
+        chartPadding: { top: 0, right: 5, bottom: 0, left: 0}
+    };
+    
+    var responsiveOptions: any[] = [
+      ['screen and (max-width: 640px)', {
+        seriesBarDistance: 5,
+        axisX: {
+          labelInterpolationFnc: function (value) {
+            return value[0];
+          }
+        }
+      }]
+    ];
+    var Query10 = new Chartist.Bar('#Query10', dataQuery10, optionsQuery10, responsiveOptions);
+
+    //start animation for the Emails Subscription Chart
+    let seq2: any, delays2: any, durations2: any;
+
+    seq2 = 0;
+    delays2 = 80;
+    durations2 = 500;
+    Query10.on('draw', function(data) {
+      if(data.type === 'bar'){
+          seq2++;
+          //setup style settings for line barchart
+          data.element.attr({
+            style: "stroke-width: 5px;"
+          });
+          // We use the group element of the current series to append a simple circle 
+          // with the bar peek coordinates and a circle radius that is depending on the value
+          var circle = new Chartist.Svg('circle', {
+            cx: data.x2,
+            cy: data.y2,
+            r: 5
+          }, 'ct-slice-pie');
+          //setup style settings for lollipop radius
+          data.group.append(circle.attr({
+            style: "fill: rgba(232, 230, 227, 0.95);" +
+            "stroke: rgba(232, 230, 227, 0.95);"},"style"));
+
+          data.element.animate({
+            opacity: {
+              begin: seq2 * delays2,
+              dur: durations2,
+              from: 0,
+              to: 1,
+              easing: 'ease'
+            }
+          });
+      }
+    });
   }
 
   refresh(){

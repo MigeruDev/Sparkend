@@ -8,6 +8,7 @@ import { map, catchError, tap } from 'rxjs/operators';
 declare function require(name:string);
 var arr = require('app/queries/result_eigth_query.json');
 var dep = require('app/queries/result_ninth_query.json');
+var q10 = require('app/queries/result_tenth_query.json');
 
 // Cambiar por API de pyspark
 const endpoint = 'http://localhost:8000/flights/';
@@ -32,8 +33,13 @@ export class RestService {
     //  map(this.extractData));
     
     return (arr_dep === "eigth") ? arr : dep;
-    //const arr = "src/app/queries/result_eigth_query.json"
-    //return this.http.get(arr);
+  }
+
+  getNotCancelledFlights(): any [] {
+    //return this.http.get(endpoint + 'consulta'+arr_dep).pipe(
+    //  map(this.extractData));
+    
+    return q10;
   }
 
 
