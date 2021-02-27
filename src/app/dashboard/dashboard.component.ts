@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild, Inject, ChangeDetectorRef} from '@angular/core';
+import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { RestService } from '../rest.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as Chartist from 'chartist';
 
 @Component({
@@ -8,7 +12,52 @@ import * as Chartist from 'chartist';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
+  panelOpenState: boolean = false;
+
+  displayedColumns = ['aerolinea', 'origen','destino', 'conteo'];
+
+  dataSource8: MatTableDataSource<any>;
+  dataSource9: MatTableDataSource<any>;
+
+  query8: any[];
+  query9: any[];
+
+
+  private paginator8: MatPaginator;
+  private sort8: MatSort;
+  private paginator9: MatPaginator;
+  private sort9: MatSort;
+
+  @ViewChild(MatSort) set matSort(ms: MatSort) {
+    this.sort8 = ms;
+    this.sort9 = ms;
+    this.setDataSourceAttributes();
+  }
+
+  @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
+    this.paginator8 = mp;
+    this.paginator9 = mp;
+    this.setDataSourceAttributes();
+  }
+
+
+  constructor(public rest:RestService, private route: ActivatedRoute, 
+    public dialog: MatDialog, private router: Router, private cdRef:ChangeDetectorRef) {
+
+    // Assign the data to the data source for the table to render
+    this.dataSource8 = new MatTableDataSource();
+    this.dataSource9 = new MatTableDataSource();
+    
+    this.dataSource8.paginator = this.paginator8;
+    this.dataSource8.sort = this.sort8;
+    this.dataSource9.paginator = this.paginator9;
+    this.dataSource9.sort = this.sort9;
+    this.getDelayCount();
+    //this.setDelayCount("eigth");
+  }
+
+
+
   startAnimationForLineChart(chart){
       let seq: any, delays: any, durations: any;
       seq = 0;
@@ -42,6 +91,7 @@ export class DashboardComponent implements OnInit {
 
       seq = 0;
   };
+
   startAnimationForBarChart(chart){
       let seq2: any, delays2: any, durations2: any;
 
@@ -65,6 +115,8 @@ export class DashboardComponent implements OnInit {
 
       seq2 = 0;
   };
+
+
   ngOnInit() {
       /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
 
@@ -145,6 +197,57 @@ export class DashboardComponent implements OnInit {
 
       //start animation for the Emails Subscription Chart
       this.startAnimationForBarChart(websiteViewsChart);
+  }
+  
+  ngAfterViewInit() {
+    this.dataSource8.paginator = this.paginator8;
+    this.dataSource8.sort = this.sort8;
+    this.dataSource9.paginator = this.paginator9;
+    this.dataSource9.sort = this.sort9;
+    this.cdRef.detectChanges();
+  }
+
+  setDataSourceAttributes() {
+    this.dataSource8.paginator = this.paginator8;
+    this.dataSource8.sort = this.sort8;
+    this.dataSource9.paginator = this.paginator9;
+    this.dataSource9.sort = this.sort9;
+  }
+
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+    this.dataSource8.filter = filterValue;
+    this.dataSource9.filter = filterValue;
+  }
+
+  getDelayCount() {
+    /*this.rest.getDelayCount(arr_dep).subscribe((data: any[]) => {
+      this.dataSource.data = data
+      console.log(data)
+    });*/
+    this.dataSource8.data = this.rest.getDelayCount("eigth");
+    this.dataSource9.data = this.rest.getDelayCount("ninth");
+    //console.log(this.dataSource.data)
+  }
+
+  setDelayCount(arr_dep) {
+    if (arr_dep === "eigth") {
+      this.dataSource8.data = this.query8;
+    } else {
+      this.dataSource9.data = this.query9;
+    }
+  }
+
+  refresh(){
+    //this.displayedColumns = this.productColumns[this.inventarioItem];
+    // Assign the data to the data source for the table to render
+    this.dataSource8 = new MatTableDataSource();
+    this.dataSource9 = new MatTableDataSource();
+    this.dataSource8.paginator = this.paginator8;
+    this.dataSource8.sort = this.sort8;
+    this.dataSource9.paginator = this.paginator9;
+    this.dataSource9.sort = this.sort9;
   }
 
 }

@@ -3,8 +3,13 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable} from 'rxjs';
 import {of} from "rxjs/observable/of";
 import { map, catchError, tap } from 'rxjs/operators';
+//import arrdelay from "app/queries/result_eigth_query.json";
+//import depdelay from "app/queries/result_ninth_query.json";
+declare function require(name:string);
+var arr = require('app/queries/result_eigth_query.json');
+var dep = require('app/queries/result_ninth_query.json');
 
-
+// Cambiar por API de pyspark
 const endpoint = 'http://localhost:8000/flights/';
   const httpOptions = {
     headers: new HttpHeaders({
@@ -21,6 +26,16 @@ export class RestService {
     let body = res;
     return body || { };
   }
+
+  getDelayCount(arr_dep): any [] {
+    //return this.http.get(endpoint + 'consulta'+arr_dep).pipe(
+    //  map(this.extractData));
+    
+    return (arr_dep === "eigth") ? arr : dep;
+    //const arr = "src/app/queries/result_eigth_query.json"
+    //return this.http.get(arr);
+  }
+
 
   getFlightNumber(number): Observable<any> {
     return this.http.get(endpoint + 'number/'+number).pipe(

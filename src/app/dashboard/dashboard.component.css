@@ -1,0 +1,12 @@
+/***************************************************************/
+/* Mat Rows&Columns CSS*/
+
+.mat-column-conteo {
+    text-align: right;
+    justify-content: flex-end;
+  }
+
+.mat-header-conteo {
+  text-align: right;
+  justify-content: flex-end;
+}
