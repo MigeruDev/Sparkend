@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild, Inject, ChangeDetectorRef} from '@angular/core';
+import { Component, OnInit,ViewChild, Inject, ChangeDetectorRef, ViewChildren} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { RestService } from '../rest.service';
@@ -19,25 +19,17 @@ export class DashboardComponent implements OnInit {
   dataSource8: MatTableDataSource<any>;
   dataSource9: MatTableDataSource<any>;
 
-  query8: any[];
-  query9: any[];
-
-
   private paginator8: MatPaginator;
-  private sort8: MatSort;
   private paginator9: MatPaginator;
-  private sort9: MatSort;
 
-  @ViewChild(MatSort) set matSort(ms: MatSort) {
-    this.sort8 = ms;
-    this.sort9 = ms;
-    this.setDataSourceAttributes();
+  @ViewChild('paginator8') set matPaginator(mp: MatPaginator) {
+    this.paginator8 = mp;
+    this.dataSource8.paginator = this.paginator8;
   }
 
-  @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
-    this.paginator8 = mp;
+  @ViewChild('paginator9') set matPaginator9(mp: MatPaginator) {
     this.paginator9 = mp;
-    this.setDataSourceAttributes();
+    this.dataSource9.paginator = this.paginator9;
   }
 
 
@@ -49,9 +41,7 @@ export class DashboardComponent implements OnInit {
     this.dataSource9 = new MatTableDataSource();
     
     this.dataSource8.paginator = this.paginator8;
-    this.dataSource8.sort = this.sort8;
     this.dataSource9.paginator = this.paginator9;
-    this.dataSource9.sort = this.sort9;
     this.getDelayCount();
     //this.setDelayCount("eigth");
   }
@@ -201,24 +191,8 @@ export class DashboardComponent implements OnInit {
   
   ngAfterViewInit() {
     this.dataSource8.paginator = this.paginator8;
-    this.dataSource8.sort = this.sort8;
     this.dataSource9.paginator = this.paginator9;
-    this.dataSource9.sort = this.sort9;
     this.cdRef.detectChanges();
-  }
-
-  setDataSourceAttributes() {
-    this.dataSource8.paginator = this.paginator8;
-    this.dataSource8.sort = this.sort8;
-    this.dataSource9.paginator = this.paginator9;
-    this.dataSource9.sort = this.sort9;
-  }
-
-  applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
-    this.dataSource8.filter = filterValue;
-    this.dataSource9.filter = filterValue;
   }
 
   getDelayCount() {
@@ -228,15 +202,6 @@ export class DashboardComponent implements OnInit {
     });*/
     this.dataSource8.data = this.rest.getDelayCount("eigth");
     this.dataSource9.data = this.rest.getDelayCount("ninth");
-    //console.log(this.dataSource.data)
-  }
-
-  setDelayCount(arr_dep) {
-    if (arr_dep === "eigth") {
-      this.dataSource8.data = this.query8;
-    } else {
-      this.dataSource9.data = this.query9;
-    }
   }
 
   refresh(){
@@ -245,9 +210,7 @@ export class DashboardComponent implements OnInit {
     this.dataSource8 = new MatTableDataSource();
     this.dataSource9 = new MatTableDataSource();
     this.dataSource8.paginator = this.paginator8;
-    this.dataSource8.sort = this.sort8;
     this.dataSource9.paginator = this.paginator9;
-    this.dataSource9.sort = this.sort9;
   }
 
 }
