@@ -34,3 +34,7 @@
   fill: rgba(232, 230, 227, 0.8);
   stroke: rgba(232, 230, 227, 0.8);
 }
+
+.ct-chart .ct-series-b .ct-slice-pie, .ct-chart .ct-series-b .ct-slice-donut-solid, .ct-chart .ct-series-b .ct-area {
+  fill: rgb(245, 78, 66, 0.5) !important;
+}

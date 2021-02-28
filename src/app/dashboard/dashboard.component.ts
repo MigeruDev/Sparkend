@@ -4,6 +4,9 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { RestService } from '../rest.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as Chartist from 'chartist';
+declare function require(name:string);
+require('chartist-plugin-legend');
+//import 'chartist-plugin-legend';
 import { element } from 'protractor';
 
 @Component({
@@ -38,6 +41,8 @@ export class DashboardComponent implements OnInit {
 
   constructor(public rest:RestService, private route: ActivatedRoute, 
     public dialog: MatDialog, private router: Router, private cdRef:ChangeDetectorRef) {
+
+    //var aux = new legend(); //without this line, you get 'Chartist.plugins undefined'
 
     // Assign the data to the data source for the table to render
     this.dataSource8 = new MatTableDataSource();
@@ -114,11 +119,17 @@ export class DashboardComponent implements OnInit {
 
 
   ngOnInit() {
-      /* ----------==========     Historico de vuelos cancelados por origen/destino    ==========---------- */
-      this.drawQuery11();
+      
+    /* ----------==========     Historico de vuelos por origen/destino    ==========---------- */
+    this.drawQuery15();
 
-      /* ----------==========     Historico de vuelos no cancelados    ==========---------- */
-      this.drawQuery10();      
+    this.drawQuery16();
+  
+    /* ----------==========     Historico de vuelos cancelados por origen/destino    ==========---------- */
+    this.drawQuery11();
+
+    /* ----------==========     Historico de vuelos no cancelados    ==========---------- */
+    this.drawQuery10();      
   }
   
   ngAfterViewInit() {
@@ -263,6 +274,7 @@ export class DashboardComponent implements OnInit {
         }),
         low: 0,
         high: 250,
+        showArea: true,
         chartPadding: { top: 0, right: 0, bottom: 0, left: 0}
     }
 
@@ -271,6 +283,100 @@ export class DashboardComponent implements OnInit {
     // start animation for the History of Cancelled Flights Chart - Line Chart
     this.startAnimationForLineChart(Query11);
   }
+
+  /* ----------==========     Historico de vuelos por origen/destino    ==========---------- */
+  drawQuery15() {
+
+    /*this.rest.getCancelledFlights(arr_dep).subscribe((data: any[]) => {
+      this.dataSource.data = data
+      console.log(data)
+    });*/
+
+    var q15 = this.rest.getOriginCount();
+    q15.sort((a, b) => a.agno < b.agno ? -1 : a.agno > b.agno ? 1 : 0);
+    
+    
+    var dataQuery15 = {
+      labels: [],
+      series: [
+        []
+      ]
+    };
+    
+    q15.forEach( (element) => {
+      dataQuery15.labels.push(element.agno);
+      dataQuery15.series[0].push(element.count);
+    });
+
+    const optionsQuery15: any = {
+        lineSmooth: Chartist.Interpolation.cardinal({
+            tension: 0,
+            fillHoles: true
+        }),
+        low: 0,
+        high: 250,
+        showArea: true,
+        chartPadding: { top: 0, right: 0, bottom: 0, left: 0}
+    }
+
+    var plugins = [
+      Chartist.plugins.legend({
+          legendNames: ['Origen', 'Destino']
+      })
+    ];
+
+    var Query15 = new Chartist.Line('#Query15', dataQuery15, optionsQuery15, plugins );
+
+    // start animation for the Origin Flights History Chart - Line Chart
+    this.startAnimationForLineChart(Query15);
+  }
+
+  drawQuery16() {
+
+    /*this.rest.getCancelledFlights(arr_dep).subscribe((data: any[]) => {
+      this.dataSource.data = data
+      console.log(data)
+    });*/
+
+    var q16 = this.rest.getDestinationCount();
+    q16.sort((a, b) => a.agno < b.agno ? -1 : a.agno > b.agno ? 1 : 0);
+    
+    
+    var dataQuery16 = {
+      labels: [],
+      series: [
+        []
+      ]
+    };
+    
+    q16.forEach( (element) => {
+      dataQuery16.labels.push(element.agno);
+      dataQuery16.series[0].push(element.count);
+    });
+
+    const optionsQuery16: any = {
+        lineSmooth: Chartist.Interpolation.cardinal({
+            tension: 0,
+            fillHoles: true
+        }),
+        low: 0,
+        high: 2050,
+        showArea: true,
+        chartPadding: { top: 0, right: 0, bottom: 0, left: 0}
+    }
+
+    var plugins = [
+      Chartist.plugins.legend({
+          legendNames: ['Origen', 'Destino']
+      })
+    ];
+
+    var Query16 = new Chartist.Line('#Query16', dataQuery16, optionsQuery16, plugins );
+
+    // start animation for the Origin Flights History Chart - Line Chart
+    this.startAnimationForLineChart(Query16);
+  }
+
 
   refresh(){
     // Assign the data to the data source for the table to render

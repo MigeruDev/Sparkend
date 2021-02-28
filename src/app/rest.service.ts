@@ -11,6 +11,8 @@ var dep = require('app/queries/result_ninth_query.json');
 var q10 = require('app/queries/result_tenth_query.json');
 var q11 = require('app/queries/result_eleventh_query.json');
 var q12 = require('app/queries/result_twelfth_query.json');
+var q15 = require('app/queries/result_fifteenth_query.json');
+var q16 = require('app/queries/result_sixteenth_query.json');
 
 // Cambiar por API de pyspark
 const endpoint = 'http://localhost:8000/flights/';
@@ -60,6 +62,21 @@ export class RestService {
     //  map(this.extractData));
     
     return q12;
+  }
+
+  /* ----------==========     Historico de vuelos por origen/destino    ==========---------- */
+  getOriginCount(): any [] {
+    //return this.http.get(endpoint + 'consulta'+arr_dep).pipe(
+    //  map(this.extractData));
+    
+    return q15;
+  }
+
+  getDestinationCount(): any [] {
+    //return this.http.get(endpoint + 'consulta'+arr_dep).pipe(
+    //  map(this.extractData));
+    
+    return q16;
   }
 
 
