@@ -9,6 +9,7 @@ declare function require(name:string);
 var arr = require('app/queries/result_eigth_query.json');
 var dep = require('app/queries/result_ninth_query.json');
 var q10 = require('app/queries/result_tenth_query.json');
+var q11 = require('app/queries/result_eleventh_query.json');
 
 // Cambiar por API de pyspark
 const endpoint = 'http://localhost:8000/flights/';
@@ -40,6 +41,13 @@ export class RestService {
     //  map(this.extractData));
     
     return q10;
+  }
+
+  getCancelledFlights(): any [] {
+    //return this.http.get(endpoint + 'consulta'+arr_dep).pipe(
+    //  map(this.extractData));
+    
+    return q11;
   }
 
 

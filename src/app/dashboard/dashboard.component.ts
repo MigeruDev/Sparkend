@@ -133,30 +133,8 @@ export class DashboardComponent implements OnInit {
       this.startAnimationForLineChart(dailySalesChart);
 
 
-      /* ----------==========     Completed Tasks Chart initialization    ==========---------- */
-
-      const dataCompletedTasksChart: any = {
-          labels: ['12p', '3p', '6p', '9p', '12p', '3a', '6a', '9a'],
-          series: [
-              [230, 750, 450, 300, 280, 240, 200, 190]
-          ]
-      };
-
-     const optionsCompletedTasksChart: any = {
-          lineSmooth: Chartist.Interpolation.cardinal({
-              tension: 0
-          }),
-          low: 0,
-          high: 1000, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-          chartPadding: { top: 0, right: 0, bottom: 0, left: 0}
-      }
-
-      var completedTasksChart = new Chartist.Line('#completedTasksChart', dataCompletedTasksChart, optionsCompletedTasksChart);
-
-      // start animation for the Completed Tasks Chart - Line Chart
-      this.startAnimationForLineChart(completedTasksChart);
-
-
+      /* ----------==========     Historico de vuelos cancelados por origen/destino    ==========---------- */
+      this.drawQuery11();
 
       /* ----------==========     Historico de vuelos no cancelados    ==========---------- */
       this.drawQuery10();      
@@ -212,7 +190,7 @@ export class DashboardComponent implements OnInit {
         high: 2100,
         chartPadding: { top: 0, right: 5, bottom: 0, left: 0}
     };
-    
+
     var responsiveOptions: any[] = [
       ['screen and (max-width: 640px)', {
         seriesBarDistance: 5,
@@ -225,7 +203,7 @@ export class DashboardComponent implements OnInit {
     ];
     var Query10 = new Chartist.Bar('#Query10', dataQuery10, optionsQuery10, responsiveOptions);
 
-    //start animation for the Emails Subscription Chart
+    //start animation for the NotCancelledFlights History Chart
     let seq2: any, delays2: any, durations2: any;
 
     seq2 = 0;
@@ -261,6 +239,44 @@ export class DashboardComponent implements OnInit {
           });
       }
     });
+  }
+
+  /* ----------==========     Historico de vuelos cancelados por origen/destino    ==========---------- */
+  drawQuery11() {
+
+    /*this.rest.getCancelledFlights(arr_dep).subscribe((data: any[]) => {
+      this.dataSource.data = data
+      console.log(data)
+    });*/
+
+    var q11 = this.rest.getCancelledFlights();
+    q11.sort((a, b) => a.time < b.time ? -1 : a.time > b.time ? 1 : 0);
+    
+    var dataQuery11 = {
+      labels: [],
+      series: [
+        []
+      ]
+    };
+    
+    q11.forEach( (element) => {
+      dataQuery11.labels.push(element.time);
+      dataQuery11.series[0].push(element.count);
+    });
+
+    const optionsQuery11: any = {
+        lineSmooth: Chartist.Interpolation.cardinal({
+            tension: 0
+        }),
+        low: 0,
+        high: 250,
+        chartPadding: { top: 0, right: 0, bottom: 0, left: 0}
+    }
+
+    var Query11 = new Chartist.Line('#Query11', dataQuery11, optionsQuery11);
+
+    // start animation for the History of Cancelled Flights Chart - Line Chart
+    this.startAnimationForLineChart(Query11);
   }
 
   refresh(){
