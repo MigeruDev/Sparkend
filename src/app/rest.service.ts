@@ -10,6 +10,7 @@ var arr = require('app/queries/result_eigth_query.json');
 var dep = require('app/queries/result_ninth_query.json');
 var q10 = require('app/queries/result_tenth_query.json');
 var q11 = require('app/queries/result_eleventh_query.json');
+var q12 = require('app/queries/result_twelfth_query.json');
 
 // Cambiar por API de pyspark
 const endpoint = 'http://localhost:8000/flights/';
@@ -29,6 +30,7 @@ export class RestService {
     return body || { };
   }
 
+  /* ----------==========     Conteo de retrasos por ruta llegada/salida    ==========---------- */
   getDelayCount(arr_dep): any [] {
     //return this.http.get(endpoint + 'consulta'+arr_dep).pipe(
     //  map(this.extractData));
@@ -36,6 +38,7 @@ export class RestService {
     return (arr_dep === "eigth") ? arr : dep;
   }
 
+  /* ----------==========     Historico de vuelos no cancelados    ==========---------- */
   getNotCancelledFlights(): any [] {
     //return this.http.get(endpoint + 'consulta'+arr_dep).pipe(
     //  map(this.extractData));
@@ -43,11 +46,20 @@ export class RestService {
     return q10;
   }
 
+  /* ----------==========     Historico de vuelos cancelados por origen/destino    ==========---------- */
   getCancelledFlights(): any [] {
     //return this.http.get(endpoint + 'consulta'+arr_dep).pipe(
     //  map(this.extractData));
     
     return q11;
+  }
+
+  /* ----------==========     Categorias por las que se cancelan    ==========---------- */
+  getCategoryCount(): any [] {
+    //return this.http.get(endpoint + 'consulta'+arr_dep).pipe(
+    //  map(this.extractData));
+    
+    return q12;
   }
 
 

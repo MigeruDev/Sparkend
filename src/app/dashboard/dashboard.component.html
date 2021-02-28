@@ -123,7 +123,7 @@
 
       <div class="row">
 
-          <div class="col-lg-6 col-md-12">
+          <div class="col-lg-8 col-md-12">
               <div class="card">
                   <div class="card-header card-header-tabs card-header-primary">
                       <div class="nav-tabs-navigation">
@@ -154,25 +154,25 @@
 
                                     <!-- Airline Name Column -->
                                     <ng-container matColumnDef="aerolinea">
-                                        <mat-header-cell *matHeaderCellDef mat-sort-header> Aerolinea </mat-header-cell>
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header class="text-primary"> Aerolinea </mat-header-cell>
                                         <mat-cell *matCellDef="let row"> {{row.aerolinea}} </mat-cell>
                                     </ng-container>
 
                                     <!-- Flight Origin Column -->
                                     <ng-container matColumnDef="origen">
-                                        <mat-header-cell *matHeaderCellDef mat-sort-header> Origen</mat-header-cell>
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header class="text-primary"> Origen</mat-header-cell>
                                         <mat-cell *matCellDef="let row"> {{row.origin}} </mat-cell>
                                     </ng-container>
 
                                     <!-- Flight Dest Column -->
                                     <ng-container matColumnDef="destino">
-                                        <mat-header-cell *matHeaderCellDef mat-sort-header> Destino</mat-header-cell>
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header class="text-primary"> Destino</mat-header-cell>
                                         <mat-cell *matCellDef="let row"> {{row.dest}} </mat-cell>
                                     </ng-container>
 
                                     <!-- Delay Count Column -->
                                     <ng-container matColumnDef="conteo">
-                                        <mat-header-cell *matHeaderCellDef mat-sort-header> Conteo de Retrasos </mat-header-cell>
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header class="text-primary"> Conteo de Retrasos </mat-header-cell>
                                         <mat-cell *matCellDef="let row" > {{row.count}}
                                         </mat-cell>
                                     </ng-container>
@@ -192,25 +192,25 @@
 
                                     <!-- Airline Name Column -->
                                     <ng-container matColumnDef="aerolinea">
-                                        <mat-header-cell *matHeaderCellDef mat-sort-header> Aerolinea </mat-header-cell>
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header class="text-primary"> Aerolinea </mat-header-cell>
                                         <mat-cell *matCellDef="let row"> {{row.aerolinea}} </mat-cell>
                                     </ng-container>
 
                                     <!-- Flight Origin Column -->
                                     <ng-container matColumnDef="origen">
-                                        <mat-header-cell *matHeaderCellDef mat-sort-header> Origen</mat-header-cell>
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header class="text-primary"> Origen</mat-header-cell>
                                         <mat-cell *matCellDef="let row"> {{row.origin}} </mat-cell>
                                     </ng-container>
 
                                     <!-- Flight Dest Column -->
                                     <ng-container matColumnDef="destino">
-                                        <mat-header-cell *matHeaderCellDef mat-sort-header> Destino</mat-header-cell>
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header class="text-primary"> Destino</mat-header-cell>
                                         <mat-cell *matCellDef="let row"> {{row.dest}} </mat-cell>
                                     </ng-container>
 
                                     <!-- Delay Count Column -->
                                     <ng-container matColumnDef="conteo">
-                                        <mat-header-cell *matHeaderCellDef mat-sort-header> Conteo de Retrasos </mat-header-cell>
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header class="text-primary"> Conteo de Retrasos </mat-header-cell>
                                         <mat-cell *matCellDef="let row" > {{row.count}}
                                         </mat-cell>
                                     </ng-container>
@@ -228,48 +228,31 @@
               </div>
           </div>
          
-          <div class="col-lg-6 col-md-12">
+          <div class="col-lg-4 col-md-12">
               <div class="card">
                   <div class="card-header card-header-warning">
-                      <h4 class="card-title">Employees Stats</h4>
-                      <p class="card-category">New employees on 15th September, 2016</p>
+                      <h4 class="card-title">Vuelos Cancelados</h4>
+                      <p class="card-category">Segun la categoria</p>
                   </div>
-                  <div class="card-body table-responsive">
-                      <table class="table table-hover">
-                          <thead class="text-warning">
-                              <th>ID</th>
-                              <th>Name</th>
-                              <th>Salary</th>
-                              <th>Country</th>
-                          </thead>
-                          <tbody>
-                              <tr>
-                                  <td>1</td>
-                                  <td>Dakota Rice</td>
-                                  <td>$36,738</td>
-                                  <td>Niger</td>
-                              </tr>
-                              <tr>
-                                  <td>2</td>
-                                  <td>Minerva Hooper</td>
-                                  <td>$23,789</td>
-                                  <td>Curaçao</td>
-                              </tr>
-                              <tr>
-                                  <td>3</td>
-                                  <td>Sage Rodriguez</td>
-                                  <td>$56,142</td>
-                                  <td>Netherlands</td>
-                              </tr>
-                              <tr>
-                                  <td>4</td>
-                                  <td>Philip Chaney</td>
-                                  <td>$38,735</td>
-                                  <td>Korea, South</td>
-                              </tr>
-                          </tbody>
-                      </table>
-                  </div>
+                    <div class="card-body table-responsive">
+                        <mat-table [dataSource]="dataSource12" matSort>
+                            <!-- Airline Name Column -->
+                            <ng-container matColumnDef="categoria">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header class="text-warning"> Categoria </mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.category}} </mat-cell>
+                            </ng-container>
+
+                            <!-- Flight Origin Column -->
+                            <ng-container matColumnDef="conteo">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header class="text-warning"> Conteo</mat-header-cell>
+                                <mat-cell *matCellDef="let row"> {{row.count}} </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="displayedColumns12"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumns12;">
+                            </mat-row>
+                        </mat-table>
+                    </div>
               </div>
           </div>
       </div>

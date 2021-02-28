@@ -11,6 +11,11 @@
   justify-content: flex-end;
 }
 
+.card .card-header.card-header-tabs .nav-tabs-title {
+  font-size: 1.125rem;
+  font-weight: 300;
+}
+
 /**************************************************************/
 /* Use this selector to override bar styles on bar charts. Bars are also strokes so you have maximum freedom in styling them. */
 

@@ -16,9 +16,11 @@ export class DashboardComponent implements OnInit {
   panelOpenState: boolean = false;
 
   displayedColumns = ['aerolinea', 'origen','destino', 'conteo'];
+  displayedColumns12 = ['categoria', 'conteo'];
 
   dataSource8: MatTableDataSource<any>;
   dataSource9: MatTableDataSource<any>;
+  dataSource12: MatTableDataSource<any>;
 
   private paginator8: MatPaginator;
   private paginator9: MatPaginator;
@@ -40,11 +42,13 @@ export class DashboardComponent implements OnInit {
     // Assign the data to the data source for the table to render
     this.dataSource8 = new MatTableDataSource();
     this.dataSource9 = new MatTableDataSource();
+    this.dataSource12 = new MatTableDataSource();
     
     this.dataSource8.paginator = this.paginator8;
     this.dataSource9.paginator = this.paginator9;
+
+    this.getCategoryCount();
     this.getDelayCount();
-    //this.setDelayCount("eigth");
   }
 
 
@@ -110,29 +114,6 @@ export class DashboardComponent implements OnInit {
 
 
   ngOnInit() {
-      /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
-
-      const dataDailySalesChart: any = {
-          labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
-          series: [
-              [12, 17, 7, 17, 23, 18, 38]
-          ]
-      };
-
-     const optionsDailySalesChart: any = {
-          lineSmooth: Chartist.Interpolation.cardinal({
-              tension: 0
-          }),
-          low: 0,
-          high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-          chartPadding: { top: 0, right: 0, bottom: 0, left: 0},
-      }
-
-      var dailySalesChart = new Chartist.Line('#dailySalesChart', dataDailySalesChart, optionsDailySalesChart);
-
-      this.startAnimationForLineChart(dailySalesChart);
-
-
       /* ----------==========     Historico de vuelos cancelados por origen/destino    ==========---------- */
       this.drawQuery11();
 
@@ -143,9 +124,11 @@ export class DashboardComponent implements OnInit {
   ngAfterViewInit() {
     this.dataSource8.paginator = this.paginator8;
     this.dataSource9.paginator = this.paginator9;
+    this.dataSource12.paginator = this.paginator9;
     this.cdRef.detectChanges();
   }
 
+  /* ----------==========     Conteo de retrasos por ruta llegada/salida    ==========---------- */
   getDelayCount() {
     /*this.rest.getDelayCount(arr_dep).subscribe((data: any[]) => {
       this.dataSource.data = data
@@ -154,6 +137,16 @@ export class DashboardComponent implements OnInit {
     this.dataSource8.data = this.rest.getDelayCount("eigth");
     this.dataSource9.data = this.rest.getDelayCount("ninth");
   }
+
+  /* ----------==========     Categorias por las que se cancelan    ==========---------- */
+  getCategoryCount() {
+    /*this.rest.getCategoryCount(arr_dep).subscribe((data: any[]) => {
+      this.dataSource.data = data
+      console.log(data)
+    });*/
+    this.dataSource12.data = this.rest.getCategoryCount();
+  }
+
 
   /* ----------==========     Historico de vuelos no cancelados    ==========---------- */
   drawQuery10() {
@@ -280,10 +273,10 @@ export class DashboardComponent implements OnInit {
   }
 
   refresh(){
-    //this.displayedColumns = this.productColumns[this.inventarioItem];
     // Assign the data to the data source for the table to render
     this.dataSource8 = new MatTableDataSource();
     this.dataSource9 = new MatTableDataSource();
+    this.dataSource12 = new MatTableDataSource();
     this.dataSource8.paginator = this.paginator8;
     this.dataSource9.paginator = this.paginator9;
   }
