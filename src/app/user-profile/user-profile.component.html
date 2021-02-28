@@ -1,69 +1,74 @@
 <div class="main-content">
   <div class="container-fluid">
-      <div class="row">
-          <div class="col-md-12">
-              <div class="card">
-                  <div class="card-header card-header-danger card-expansion">
-                      <h4 class="card-title">Ingreso de vuelo</h4>
-                      <p class="card-category">Puede ingresar la información de varios vuelos a la vez</p>
-                  </div>
-                  <div class="card-body">
-                      <form>
-
-                          <button mat-raised-button type="submit" class="btn btn-primary col-md-12" (click)="ingresarVuelo()" >Ingresar todos los vuelos</button>
-                          <div class="row card-product" *ngFor="let flight of flights; let rowIndex = index">
-                            <div class="col-md-10">
-
-                              <div class="row"> 
-                                <mat-form-field class="col-md-4">
-                                  <input name="flightnum-{{rowIndex}}" matInput placeholder="Número de vuelo" [(ngModel)]="flight.FlightNum" required>
-                                  <span matPrefix>#&nbsp;</span>
-                                </mat-form-field>
-                              </div>
-                              
-                              <div class="row">
-                                <mat-form-field class="col-md-3">
-                                  <input name="year-{{rowIndex}}" matInput placeholder="Año" [(ngModel)]="flight.Year" required>
-                                </mat-form-field>
-
-                                <mat-form-field class="col-md-3">
-                                  <input name="deptime-{{rowIndex}}" matInput placeholder="Actual Departure Time" [(ngModel)]="flight.DepTime" required>
-                                </mat-form-field>
-
-                                <mat-form-field class="col-md-3">
-                                  <input name="arrtime-{{rowIndex}}" matInput placeholder="Actual Arrival Time" [(ngModel)]="flight.ArrTime" required>
-                                </mat-form-field>
-
-                                <mat-form-field class="col-md-3">
-                                  <input name="uniquecarrier-{{rowIndex}}" matInput placeholder="Unique Carrier Code" [(ngModel)]="flight.UniqueCarrier" required>
-                                </mat-form-field>
-                              </div>
-
-                              <div class="row">
-                                <mat-form-field class="col-md-6">
-                                  <input name="origin-{{rowIndex}}" matInput placeholder="Origen" [(ngModel)]="flight.Origin" required>
-                                </mat-form-field>
-
-                                <mat-form-field class="col-md-6">
-                                  <input name="dest-{{rowIndex}}" matInput placeholder="Destino" [(ngModel)]="flight.Dest" required>
-                                </mat-form-field>
-                              </div>
-
-                            </div>
-                            <div class="col-md-2">
-                              <button mat-icon-button color="primary" class="pull-right" (click)="nuevoVuelo()">
-                                  <mat-icon aria-label="Agregar Producto producto">add</mat-icon>
-                              </button>
-                              <button mat-icon-button color="warn" class="pull-right" (click)="quitarVuelo(this.flight)">
-                                  <mat-icon aria-label="Quitar producto">delete</mat-icon>
-                              </button>
-                            </div>
-                          </div>
-                          <div class="clearfix"></div>
-                      </form>
-                  </div>
-              </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-danger card-expansion">
+            <h4 class="card-title">Ingreso de vuelo</h4>
+            <p class="card-category">Puede ingresar la información de varios vuelos a la vez</p>
           </div>
+          <div class="card-body">
+            <form>
+              <button mat-raised-button type="submit" class="btn btn-primary col-md-12"
+                (click)="ingresarVuelo()">Ingresar todos los vuelos</button>
+              <div class="row card-product" *ngFor="let flight of flights; let rowIndex = index">
+                <div class="col-md-10">
+
+                  <div class="row">
+                    <mat-form-field class="col-md-4">
+                      <input name="flightnum-{{rowIndex}}" matInput placeholder="Número de vuelo"
+                        [(ngModel)]="flight.FlightNum" required>
+                      <span matPrefix>#&nbsp;</span>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="row">
+                    <mat-form-field class="col-md-3">
+                      <input name="year-{{rowIndex}}" matInput placeholder="Año" [(ngModel)]="flight.Year" required>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-md-3">
+                      <input name="deptime-{{rowIndex}}" matInput placeholder="Actual Departure Time"
+                        [(ngModel)]="flight.DepTime" required>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-md-3">
+                      <input name="arrtime-{{rowIndex}}" matInput placeholder="Actual Arrival Time"
+                        [(ngModel)]="flight.ArrTime" required>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-md-3">
+                      <input name="uniquecarrier-{{rowIndex}}" matInput placeholder="Unique Carrier Code"
+                        [(ngModel)]="flight.UniqueCarrier" required>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="row">
+                    <mat-form-field class="col-md-6">
+                      <input name="origin-{{rowIndex}}" matInput placeholder="Origen" [(ngModel)]="flight.Origin"
+                        required>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-md-6">
+                      <input name="dest-{{rowIndex}}" matInput placeholder="Destino" [(ngModel)]="flight.Dest" required>
+                    </mat-form-field>
+                  </div>
+
+                </div>
+                <div class="col-md-2">
+                  <button mat-icon-button color="primary" class="pull-right" (click)="nuevoVuelo()">
+                    <mat-icon aria-label="Agregar Producto producto">add</mat-icon>
+                  </button>
+                  <button mat-icon-button color="warn" class="pull-right" (click)="quitarVuelo(this.flight)">
+                    <mat-icon aria-label="Quitar producto">delete</mat-icon>
+                  </button>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+            </form>
+          </div>
+        </div>
       </div>
+    </div>
   </div>
 </div>
