@@ -121,6 +121,6 @@ export class NavbarComponent implements OnInit {
               return this.listTitles[item].title;
           }
       }
-      return 'SPARK-HADOOP final project - BigData signature feb/2021';
+      return 'SPARK-HADOOP - BigData ';
     }
 }
