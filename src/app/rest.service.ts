@@ -3,8 +3,18 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable} from 'rxjs';
 import {of} from "rxjs/observable/of";
 import { map, catchError, tap } from 'rxjs/operators';
+//import arrdelay from "app/queries/result_eigth_query.json";
+//import depdelay from "app/queries/result_ninth_query.json";
+declare function require(name:string);
+var arr = require('app/queries/result_eigth_query.json');
+var dep = require('app/queries/result_ninth_query.json');
+var q10 = require('app/queries/result_tenth_query.json');
+var q11 = require('app/queries/result_eleventh_query.json');
+var q12 = require('app/queries/result_twelfth_query.json');
+var q15 = require('app/queries/result_fifteenth_query.json');
+var q16 = require('app/queries/result_sixteenth_query.json');
 
-
+// Cambiar por API de pyspark
 const endpoint = 'http://localhost:8000/flights/';
   const httpOptions = {
     headers: new HttpHeaders({
@@ -21,6 +31,54 @@ export class RestService {
     let body = res;
     return body || { };
   }
+
+  /* ----------==========     Conteo de retrasos por ruta llegada/salida    ==========---------- */
+  getDelayCount(arr_dep): any [] {
+    //return this.http.get(endpoint + 'consulta'+arr_dep).pipe(
+    //  map(this.extractData));
+    
+    return (arr_dep === "eigth") ? arr : dep;
+  }
+
+  /* ----------==========     Historico de vuelos no cancelados    ==========---------- */
+  getNotCancelledFlights(): any [] {
+    //return this.http.get(endpoint + 'consulta'+arr_dep).pipe(
+    //  map(this.extractData));
+    
+    return q10;
+  }
+
+  /* ----------==========     Historico de vuelos cancelados por origen/destino    ==========---------- */
+  getCancelledFlights(): any [] {
+    //return this.http.get(endpoint + 'consulta'+arr_dep).pipe(
+    //  map(this.extractData));
+    
+    return q11;
+  }
+
+  /* ----------==========     Categorias por las que se cancelan    ==========---------- */
+  getCategoryCount(): any [] {
+    //return this.http.get(endpoint + 'consulta'+arr_dep).pipe(
+    //  map(this.extractData));
+    
+    return q12;
+  }
+
+  /* ----------==========     Historico de vuelos por origen/destino    ==========---------- */
+  getOriginCount(): any [] {
+    //return this.http.get(endpoint + 'consulta'+arr_dep).pipe(
+    //  map(this.extractData));
+    
+    return q15;
+  }
+
+  getDestinationCount(): any [] {
+    //return this.http.get(endpoint + 'consulta'+arr_dep).pipe(
+    //  map(this.extractData));
+    
+    return q16;
+  }
+
 
   getFlightNumber(number): Observable<any> {
     return this.http.get(endpoint + 'number/'+number).pipe(

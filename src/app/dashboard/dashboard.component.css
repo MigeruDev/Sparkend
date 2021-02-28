@@ -1,0 +1,40 @@
+/***************************************************************/
+/* Mat Rows&Columns CSS*/
+
+.mat-column-conteo {
+    text-align: right;
+    justify-content: flex-end;
+  }
+
+.mat-header-conteo {
+  text-align: right;
+  justify-content: flex-end;
+}
+
+.card .card-header.card-header-tabs .nav-tabs-title {
+  font-size: 1.125rem;
+  font-weight: 300;
+}
+
+/**************************************************************/
+/* Use this selector to override bar styles on bar charts. Bars are also strokes so you have maximum freedom in styling them. */
+
+.card [class*="card-header-"] .ct-chart .ct-series-a .ct-bar {
+  /* Colour of your bars */
+  /*stroke: red;*/
+  /* The width of your bars */
+  stroke-width: 5px !important;
+  /* Yes! Dashed bars! */
+  /*stroke-dasharray: 20px;*/
+  /* Maybe you like round corners on your bars? */
+  /*stroke-linecap: round;*/
+}
+
+.card [class*="card-header-"] .ct-chart .ct-series-a .ct-slice-pie, .card [class*="card-header-"] .ct-chart .ct-series-a .ct-area {
+  fill: rgba(232, 230, 227, 0.8);
+  stroke: rgba(232, 230, 227, 0.8);
+}
+
+.ct-chart .ct-series-b .ct-slice-pie, .ct-chart .ct-series-b .ct-slice-donut-solid, .ct-chart .ct-series-b .ct-area {
+  fill: rgb(245, 78, 66, 0.5) !important;
+}
