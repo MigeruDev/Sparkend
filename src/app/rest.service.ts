@@ -11,6 +11,8 @@ var dep = require('app/queries/result_ninth_query.json');
 var q10 = require('app/queries/result_tenth_query.json');
 var q11 = require('app/queries/result_eleventh_query.json');
 var q12 = require('app/queries/result_twelfth_query.json');
+var q13 = require('app/queries/result_thirteenth_query.json');
+var q14 = require('app/queries/result_fourteenth_query.json');
 var q15 = require('app/queries/result_fifteenth_query.json');
 var q16 = require('app/queries/result_sixteenth_query.json');
 
@@ -79,10 +81,17 @@ export class RestService {
     return q16;
   }
 
+  /* ----------==========     Vuelos no cancelados según el aeropuerto de salida   ==========---------- */
+  getAirportArr(): any[] {
 
+    return q13;
+  }
 
+  /* ----------==========     Vuelos no cancelados segun aeropuertos de llegada   ==========---------- */
+  getAirportDep(): any[] {
 
-
+    return q14;
+  }
 
 
 

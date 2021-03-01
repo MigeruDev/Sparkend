@@ -43,3 +43,21 @@
   input.example-right-align {
     -moz-appearance: textfield;
   }
+
+  /***************************************************************/
+/* Mat Rows&Columns CSS*/
+
+.mat-column-conteo {
+  text-align: right;
+  justify-content: flex-end;
+}
+
+.mat-header-conteo {
+text-align: right;
+justify-content: flex-end;
+}
+
+.card .card-header.card-header-tabs .nav-tabs-title {
+font-size: 1.125rem;
+font-weight: 300;
+}
