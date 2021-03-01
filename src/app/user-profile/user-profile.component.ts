@@ -34,6 +34,9 @@ export class UserProfileComponent implements OnInit {
   displayedColumns = ['aerolinea', 'origen', 'destino', 'conteo'];
   displayedColumns12 = ['categoria', 'conteo'];
 
+  q10 = [];
+  q11 = [];
+
   dataSource8: MatTableDataSource<any>;
   dataSource9: MatTableDataSource<any>;
   dataSource12: MatTableDataSource<any>;
@@ -65,6 +68,9 @@ export class UserProfileComponent implements OnInit {
 
     this.getCategoryCount();
     this.getDelayCount();
+    this.getNotCancelledFlights();
+    this.getCancelledFlights();
+
   }
 
   
@@ -144,11 +150,23 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
-
   /* ----------==========     Historico de vuelos no cancelados    ==========---------- */
-  drawQuery10() {
+  getNotCancelledFlights() {
+    this.rest.getNotCancelledFlights().subscribe((data: any[]) => {
+      this.q10 = data;
+      console.log(this.q10);
+    });  
+  }
 
-    var q10: any;
+  /* ----------==========     Historico de vuelos cancelados por origen/destino    ==========---------- */
+  getCancelledFlights(){
+    this.rest.getCancelledFlights().subscribe((data: any[]) => {
+      this.q11 = data;
+    });
+  }
+
+  /* ----------==========     GRAFICAR - Historico de vuelos no cancelados    ==========---------- */
+  drawQuery10() {
 
     var dataQuery10 = {
       labels: [],
@@ -157,13 +175,12 @@ export class UserProfileComponent implements OnInit {
       ]
     };
 
-    this.rest.getNotCancelledFlights().subscribe((data: any[]) => {
-      q10 = data;
-      q10.forEach((element) => {
-        dataQuery10.labels.push(element.Time);
-        dataQuery10.series[0].push(element.count);
-      });
-    });    
+    console.log(this.q10);
+
+    this.q10.forEach((element) => {
+      dataQuery10.labels.push(element.Time);
+      dataQuery10.series[0].push(element.count);
+    }); 
 
     var optionsQuery10 = {
       axisX: {
@@ -229,10 +246,9 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
-  /* ----------==========     Historico de vuelos cancelados por origen/destino    ==========---------- */
+  /* ----------==========     GRAFICAR - Historico de vuelos cancelados por origen/destino    ==========---------- */
   drawQuery11() {
 
-    var q11: any;
     var dataQuery11 = {
       labels: [],
       series: [
@@ -240,12 +256,9 @@ export class UserProfileComponent implements OnInit {
       ]
     };
 
-    this.rest.getCancelledFlights().subscribe((data: any[]) => {
-      q11 = data;
-      q11.forEach((element) => {
-        dataQuery11.labels.push(element.time);
-        dataQuery11.series[0].push(element.count);
-      });
+    this.q11.forEach((element) => {
+      dataQuery11.labels.push(element.time);
+      dataQuery11.series[0].push(element.count);
     });
 
     //q11.sort((a, b) => a.time < b.time ? -1 : a.time > b.time ? 1 : 0);

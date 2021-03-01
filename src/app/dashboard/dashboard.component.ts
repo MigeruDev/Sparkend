@@ -108,7 +108,7 @@ export class DashboardComponent implements OnInit {
 
     this.getConsulta1();
     this.getConsulta2();
-    this.getConsulta3(NaN, NaN);
+    //this.getConsulta3(NaN, NaN);
     this.getConsulta4();
     this.getConsulta5();
     this.getConsulta6();
