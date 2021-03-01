@@ -1,81 +1,106 @@
 <div class="main-content">
     <div class="container-fluid">
         <!-- Consulta 1 -->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header card-header-danger card-expansion">
-                        <h4 class="card-title">Consulta 1</h4>
-                        <p class="card-category"> Total de Retrasos de llegada por ruta</p>
-                    </div>
-                    <table class="table table-responsive table-bordered">
-                        <thead>
-                            <tr>
-                                <th scope="col" style="font-weight: bold;">Origen</th>
-                                <th scope="col" style="font-weight: bold;">Destino</th>
-                                <th scope="col" style="font-weight: bold;">Conteo</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let consultaRutaLlegada of consultaRutasLlegada">
-                                <td>{{consultaRutaLlegada.origin}}</td>
-                                <td>{{consultaRutaLlegada.dest}}</td>
-                                <td style="font-weight: bold;">{{consultaRutaLlegada.count}}</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-
         <!-- Consulta 2 -->
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-lg-12 col-md-12">
                 <div class="card">
-                    <div class="card-header card-header-danger card-expansion">
-                        <h4 class="card-title">Consulta 2</h4>
-                        <p class="card-category"> Total de Retrasos de salida por ruta</p>
+                    <div class="card-header card-header-tabs card-header-primary">
+                        <div class="nav-tabs-navigation">
+                            <div class="nav-tabs-wrapper">
+                                <span class="nav-tabs-title">Conteo de retrasos por ruta:</span>
+                                <ul class="nav nav-tabs" data-tabs="tabs">
+                                    <li class="nav-item">
+                                        <a mat-button class="nav-link active" href="#llegada" data-toggle="tab">
+                                            <i class="material-icons">flight_land</i> Llegada
+                                            <div class="ripple-container"></div>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a mat-button class="nav-link" href="#salida" data-toggle="tab">
+                                            <i class="material-icons">flight_takeoff</i> Salida
+                                            <div class="ripple-container"></div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                    <table class="table table-responsive table-bordered">
-                        <thead>
-                            <tr>
-                                <th scope="col" style="font-weight: bold;">Origen</th>
-                                <th scope="col" style="font-weight: bold;">Destino</th>
-                                <th scope="col" style="font-weight: bold;">Conteo</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let consultaRutaDestino of consultaRutasDestino">
-                                <td>{{consultaRutaDestino.origin}}</td>
-                                <td>{{consultaRutaDestino.dest}}</td>
-                                <td style="font-weight: bold;">{{consultaRutaDestino.count}}</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="llegada">
+                                <mat-table [dataSource]="dataSource1" matSort>
+                                    <!-- Flight Origin Column -->
+                                    <ng-container matColumnDef="origen">
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header class="text-primary"> Origen
+                                        </mat-header-cell>
+                                        <mat-cell *matCellDef="let row"> {{row.origin}} </mat-cell>
+                                    </ng-container>
+    
+                                    <!-- Flight Dest Column -->
+                                    <ng-container matColumnDef="destino">
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header class="text-primary"> Destino
+                                        </mat-header-cell>
+                                        <mat-cell *matCellDef="let row"> {{row.dest}} </mat-cell>
+                                    </ng-container>
+    
+                                    <!-- Delay Count Column -->
+                                    <ng-container matColumnDef="conteo">
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header class="text-primary"> Conteo
+                                            de Retrasos </mat-header-cell>
+                                        <mat-cell *matCellDef="let row"> {{row.count}}
+                                        </mat-cell>
+                                    </ng-container>
+    
+                                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                                    <mat-row *matRowDef="let row; columns: displayedColumns;">
+                                    </mat-row>
+                                </mat-table>
+    
+                                <mat-paginator #paginator1 [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    
+                            </div>
+    
+                            <div class="tab-pane" id="salida">
+                                <mat-table [dataSource]="dataSource2" matSort>
+                                    <!-- Flight Origin Column -->
+                                    <ng-container matColumnDef="origen">
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header class="text-primary"> Origen
+                                        </mat-header-cell>
+                                        <mat-cell *matCellDef="let row"> {{row.origin}} </mat-cell>
+                                    </ng-container>
+                                    <!-- Flight Dest Column -->
+                                    <ng-container matColumnDef="destino">
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header class="text-primary"> Destino
+                                        </mat-header-cell>
+                                        <mat-cell *matCellDef="let row"> {{row.dest}} </mat-cell>
+                                    </ng-container>
+                                    <!-- Delay Count Column -->
+                                    <ng-container matColumnDef="conteo">
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header class="text-primary"> Conteo
+                                            de Retrasos </mat-header-cell>
+                                        <mat-cell *matCellDef="let row"> {{row.count}}
+                                        </mat-cell>
+                                    </ng-container>
+                                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                                    <mat-row *matRowDef="let row; columns: displayedColumns;">
+                                    </mat-row>
+                                </mat-table>
+                                <mat-paginator #paginator2 [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
 
         <!-- Consulta 3 -->
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-danger card-expansion">
-                        <h4 class="card-title">Consulta 3</h4>
-                        <p class="card-category"> Total Retrasos por salida de ruta en especifico</p>
-
+                        <h4 class="card-title">Total Retrasos por salida de ruta en especifico</h4>
                     </div>
                     <br>
                     <div class="container">
@@ -145,72 +170,94 @@
                 </div>
             </div>
         </div>
-
         <!-- Consulta 4 -->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header card-header-danger card-expansion">
-                        <h4 class="card-title">Consulta 4</h4>
-                        <p class="card-category"> Num retrasos por llegada por aerolinea</p>
-                    </div>
-                    <table class="table table-responsive table-bordered">
-                        <thead>
-                            <tr>
-                                <th scope="col" style="font-weight: bold;">Aerolinea</th>
-                                <th scope="col" style="font-weight: bold;">Conteo</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let _consultaAerolineasLlegada of consultaAerolineasLlegada">
-                                <td>{{_consultaAerolineasLlegada.aerolinea}}</td>
-                                <td>{{_consultaAerolineasLlegada.count}}</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
         <!-- Consulta 5 -->
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-lg-12 col-md-12">
                 <div class="card">
-                    <div class="card-header card-header-danger card-expansion">
-                        <h4 class="card-title">Consulta 5</h4>
-                        <p class="card-category"> Num retrasos por salida por aerolinea</p>
+                    <div class="card-header card-header-tabs card-header-primary">
+                        <div class="nav-tabs-navigation">
+                            <div class="nav-tabs-wrapper">
+                                <span class="nav-tabs-title">Conteo de retrasos por aerolinea:</span>
+                                <ul class="nav nav-tabs" data-tabs="tabs">
+                                    <li class="nav-item">
+                                        <a mat-button class="nav-link active" href="#llegada45" data-toggle="tab">
+                                            <i class="material-icons">flight_land</i> Llegada
+                                            <div class="ripple-container"></div>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a mat-button class="nav-link" href="#salida45" data-toggle="tab">
+                                            <i class="material-icons">flight_takeoff</i> Salida
+                                            <div class="ripple-container"></div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                    <table class="table table-responsive table-bordered">
-                        <thead>
-                            <tr>
-                                <th scope="col" style="font-weight: bold;">Aerolinea</th>
-                                <th scope="col" style="font-weight: bold;">Conteo</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let _consultaAerolineasLlegada of consultaAerolineasLlegada">
-                                <td>{{_consultaAerolineasLlegada.aerolinea}}</td>
-                                <td>{{_consultaAerolineasLlegada.count}}</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="llegada45">
+                                <mat-table [dataSource]="dataSource4" matSort>
+                                    <!-- Flight Dest Column -->
+                                    <ng-container matColumnDef="aerolinea">
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header class="text-primary"> Aerolinea
+                                        </mat-header-cell>
+                                        <mat-cell *matCellDef="let row"> {{row.aerolinea}} </mat-cell>
+                                    </ng-container>
+    
+                                    <!-- Delay Count Column -->
+                                    <ng-container matColumnDef="conteo">
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header class="text-primary"> Conteo
+                                            de Retrasos </mat-header-cell>
+                                        <mat-cell *matCellDef="let row"> {{row.count}}
+                                        </mat-cell>
+                                    </ng-container>
+    
+                                    <mat-header-row *matHeaderRowDef="displayedColumns45"></mat-header-row>
+                                    <mat-row *matRowDef="let row; columns: displayedColumns45;">
+                                    </mat-row>
+                                </mat-table>
+    
+                                <mat-paginator #paginator4 [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    
+                            </div>
+    
+                            <div class="tab-pane" id="salida45">
+                                <mat-table [dataSource]="dataSource5" matSort>
+                                    <!-- Flight Origin Column -->
+                                    <ng-container matColumnDef="aerolinea">
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header class="text-primary"> Aerolinea
+                                        </mat-header-cell>
+                                        <mat-cell *matCellDef="let row"> {{row.aerolinea}} </mat-cell>
+                                    </ng-container>
+                                    <!-- Delay Count Column -->
+                                    <ng-container matColumnDef="conteo">
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header class="text-primary"> Conteo
+                                            de Retrasos </mat-header-cell>
+                                        <mat-cell *matCellDef="let row"> {{row.count}}
+                                        </mat-cell>
+                                    </ng-container>
+                                    <mat-header-row *matHeaderRowDef="displayedColumns45"></mat-header-row>
+                                    <mat-row *matRowDef="let row; columns: displayedColumns45;">
+                                    </mat-row>
+                                </mat-table>
+                                <mat-paginator #paginator5 [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
+        
         <!-- Consulta 6 y 7 -->
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-danger card-expansion">
-                        <h4 class="card-title">Consulta 6 y 7</h4>
-                        <p class="card-category"> Aerolinea con menos y más retrasos de salida y llegada</p>
+                        <h4 class="card-title">Aerolinea con menos y más retrasos de salida y llegada</h4>
                     </div>
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-6">

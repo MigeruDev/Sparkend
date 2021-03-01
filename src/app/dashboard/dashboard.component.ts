@@ -11,6 +11,8 @@ import { HttpClientModule } from '@angular/common/http'; import { HttpModule } f
 //import 'chartist-plugin-legend';
 import { element } from 'protractor';
 import { QueryPrimeraService } from 'services/query-primera.service';
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-dashboard',
@@ -30,6 +32,37 @@ export class DashboardComponent implements OnInit {
   public consultaAerolineaMasRetraso1: ConsultaAerolinea;
   public consultaAerolineaMenosRetraso1: ConsultaAerolinea;
   public puntos = [];
+  // Tabla Unificada 
+  dataSource1: MatTableDataSource<any>;
+  dataSource2: MatTableDataSource<any>;
+  dataSource4: MatTableDataSource<any>;
+  dataSource5: MatTableDataSource<any>;
+
+  private paginator1: MatPaginator;
+  private paginator2: MatPaginator;
+  private paginator4: MatPaginator;
+  private paginator5: MatPaginator;
+  displayedColumns = ['origen', 'destino', 'conteo'];
+  displayedColumns45 = ['aerolinea', 'conteo'];
+  @ViewChild('paginator1') set matPaginator1(mp: MatPaginator) {
+    this.paginator1 = mp;
+    this.dataSource1.paginator = this.paginator1;
+  }
+
+  @ViewChild('paginator2') set matPaginator2(mp: MatPaginator) {
+    this.paginator2 = mp;
+    this.dataSource2.paginator = this.paginator2;
+  }
+  @ViewChild('paginator4') set matPaginator4(mp: MatPaginator) {
+    this.paginator4 = mp;
+    this.dataSource4.paginator = this.paginator4;
+  }
+
+  @ViewChild('paginator5') set matPaginator5(mp: MatPaginator) {
+    this.paginator5 = mp;
+    this.dataSource5.paginator = this.paginator5;
+  }
+
 
 
   constructor(public rest: RestService, private route: ActivatedRoute,
@@ -57,6 +90,22 @@ export class DashboardComponent implements OnInit {
       { value: 'BUR', viewValue: 'BUR' },
       { value: 'BWI', viewValue: 'BWI' },
     ];
+    
+
+
+// unificacion tabla
+    this.dataSource1 = new MatTableDataSource();
+    this.dataSource2 = new MatTableDataSource();
+
+    this.dataSource1.paginator = this.paginator1;
+    this.dataSource2.paginator = this.paginator2;
+    
+    this.dataSource4 = new MatTableDataSource();
+    this.dataSource5 = new MatTableDataSource();
+
+    this.dataSource4.paginator = this.paginator4;
+    this.dataSource5.paginator = this.paginator5;
+
     this.getConsulta1();
     this.getConsulta2();
     this.getConsulta3(NaN, NaN);
@@ -72,17 +121,22 @@ export class DashboardComponent implements OnInit {
   }
 
   ngAfterViewInit() {
+  
+    this.dataSource1.paginator = this.paginator1;
+    this.dataSource2.paginator = this.paginator2;
     this.cdRef.detectChanges();
   }
 
   public getConsulta1() {
     this.queryPrimeraService.getConsulta1().subscribe(_consultaLlegadaRutas => {
       this.consultaRutasLlegada = _consultaLlegadaRutas;
+      this.dataSource1.data = _consultaLlegadaRutas;
     });
   }
   public getConsulta2() {
     this.queryPrimeraService.getConsulta2().subscribe(_consultaDestinoRutas => {
       this.consultaRutasDestino = _consultaDestinoRutas;
+      this.dataSource2.data = _consultaDestinoRutas;
     });
   }
   public getConsulta3(selectedValueOrigin, selectedValueDest) {
@@ -99,11 +153,15 @@ export class DashboardComponent implements OnInit {
   public getConsulta4() {
     this.queryPrimeraService.getConsulta4().subscribe(_consultaAerolineasLlegada => {
       this.consultaAerolineasLlegada = _consultaAerolineasLlegada;
+      this.dataSource4.data = _consultaAerolineasLlegada;
+
     });
   }
   public getConsulta5() {
     this.queryPrimeraService.getConsulta5().subscribe(_consultaAerolineasSalida => {
       this.consultaAerolineasSalida = _consultaAerolineasSalida;
+      this.dataSource5.data = _consultaAerolineasSalida;
+
     });
   }
   public getConsulta6() {
@@ -117,6 +175,18 @@ export class DashboardComponent implements OnInit {
       this.consultaAerolineaMenosRetraso = _consultaAerolineaMenosRetraso;
       this.consultaAerolineaMenosRetraso1 = _consultaAerolineaMenosRetraso[0];
     });
+  }
+  refresh() {
+    // Assign the data to the data source for the table to render
+    this.dataSource1 = new MatTableDataSource();
+    this.dataSource2 = new MatTableDataSource();
+    this.dataSource4 = new MatTableDataSource();
+    this.dataSource5 = new MatTableDataSource();
+    // this.dataSource12 = new MatTableDataSource();
+    this.dataSource1.paginator = this.paginator1;
+    this.dataSource2.paginator = this.paginator2;
+    this.dataSource4.paginator = this.paginator4;
+    this.dataSource5.paginator = this.paginator5;
   }
 
 }
