@@ -12,44 +12,44 @@ export class QueryPrimeraService {
 
   constructor(private httpClient: HttpClient) { }
   public getConsulta1(): Observable<ConsultaRutas[]> {
-    var uri = `http://localhost:5000/consulta1`;
+    var uri = `http://localhost:3200/consulta1`;
     return this.httpClient.get<ConsultaRutas[]>(uri).pipe(
       map(data => data.map(data => new ConsultaRutas().deserialize(data)))
     );
   }
   public getConsulta2(): Observable<ConsultaRutas[]> {
-    var uri = `http://localhost:5000/consulta2`;
+    var uri = `http://localhost:3200/consulta2`;
     return this.httpClient.get<ConsultaRutas[]>(uri).pipe(
       map(data => data.map(data => new ConsultaRutas().deserialize(data)))
     );
   }
   public getConsulta3(origin:any, dest: any): Observable<ConsultaRuta[]> {
     // var params=`/origin=${origin}/dest=${dest}`;
-    var uri = `http://localhost:5000/consulta3/origin=${origin}/dest=${dest}`;
+    var uri = `http://localhost:3200/consulta3/origin=${origin}/dest=${dest}`;
     return this.httpClient.get<ConsultaRuta[]>(uri).pipe(
       map(data => data.map(data => new ConsultaRuta().deserialize(data)))
     );
   }
   public getConsulta4(): Observable<ConsultaAerolineas[]> {
-    var uri = `http://localhost:5000/consulta4`;
+    var uri = `http://localhost:3200/consulta4`;
     return this.httpClient.get<ConsultaAerolineas[]>(uri).pipe(
       map(data => data.map(data => new ConsultaAerolineas().deserialize(data)))
     );
   }
   public getConsulta5(): Observable<ConsultaAerolineas[]> {
-    var uri = `http://localhost:5000/consulta5`;
+    var uri = `http://localhost:3200/consulta5`;
     return this.httpClient.get<ConsultaAerolineas[]>(uri).pipe(
       map(data => data.map(data => new ConsultaAerolineas().deserialize(data)))
     );
   }
   public getConsulta6(): Observable<ConsultaAerolinea[]> {
-    var uri = `http://localhost:5000/consulta6`;
+    var uri = `http://localhost:3200/consulta6`;
     return this.httpClient.get<ConsultaAerolinea[]>(uri).pipe(
       map(data => data.map(data => new ConsultaAerolinea().deserialize(data)))
     );
   }
   public getConsulta7(): Observable<ConsultaAerolinea[]> {
-    var uri = `http://localhost:5000/consulta7`;
+    var uri = `http://localhost:3200/consulta7`;
     return this.httpClient.get<ConsultaAerolinea[]>(uri).pipe(
       map(data => data.map(data => new ConsultaAerolinea().deserialize(data)))
     );
