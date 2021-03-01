@@ -1,99 +1,53 @@
 <div class="main-content">
     <div class="container-fluid">
-        <div class="row">
-            
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header card-header-secondary card-expansion">
-                        <h4 class="card-title">Sistema de control de vuelos </h4>
-                        <p class="card-category">Historial de vuelos para realizar búsquedas en la base de datos</p>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <div class="row example-header">
-                                <mat-form-field class="col-md-9">
-                                    <input #number matInput (keyup)="applyFilter($event.target.value)" placeholder="Busqueda por numero de vuelo">
-                                </mat-form-field>
-                                <button mat-raised-button type="submit" class="btn btn-primary col-md-2" (click)="getFlightNumber(number.value)" >Consultar
-                                    <mat-icon>search</mat-icon>
-                                </button>
-                            </div>
+        
+        <div class="col-md-12">
+            <div class="card card-chart">
+                <div class="card-header card-header-primary">
 
-                            <div class="example-container mat-elevation-z8">
-
-                                <mat-table [dataSource]="dataSource" matSort>
-
-                                    <!-- ID Column -->
-                                    <ng-container matColumnDef="id">
-                                        <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
-                                        <mat-cell *matCellDef="let row"> {{row._id}} </mat-cell>
-                                    </ng-container>
-
-                                    <!-- Flight Number Column -->
-                                    <ng-container matColumnDef="flightnum">
-                                        <mat-header-cell *matHeaderCellDef mat-sort-header> Número de vuelo</mat-header-cell>
-                                        <mat-cell *matCellDef="let row"> {{row.FlightNum}} </mat-cell>
-                                    </ng-container>
-
-                                    <!-- Year Column -->
-                                    <ng-container matColumnDef="year">
-                                        <mat-header-cell *matHeaderCellDef mat-sort-header> Año</mat-header-cell>
-                                        <mat-cell *matCellDef="let row"> {{row.Year}} </mat-cell>
-                                    </ng-container>
-
-                                    <!-- Cancelled status Column -->
-                                    <ng-container matColumnDef="cancelled">
-                                        <mat-header-cell *matHeaderCellDef mat-sort-header> Cancelado </mat-header-cell>
-                                        <mat-cell *matCellDef="let row" > {{row.Cancelled}}
-                                        </mat-cell>
-                                    </ng-container>
-
-                                    <!-- Origin Column -->
-                                    <ng-container matColumnDef="origin">
-                                        <mat-header-cell *matHeaderCellDef mat-sort-header> Origen</mat-header-cell>
-                                        <mat-cell *matCellDef="let row" > {{row.Origin}}
-                                        </mat-cell>
-                                    </ng-container>
-
-                                    <!-- Destine Column -->
-                                    <ng-container matColumnDef="dest">
-                                        <mat-header-cell *matHeaderCellDef mat-sort-header> Destino</mat-header-cell>
-                                        <mat-cell *matCellDef="let row" > {{row.Dest}}
-                                        </mat-cell>
-                                    </ng-container>
-
-                                    <!-- Departure Time Column -->
-                                    <ng-container matColumnDef="deptime">
-                                        <mat-header-cell *matHeaderCellDef mat-sort-header> Actual Departure Time</mat-header-cell>
-                                        <mat-cell *matCellDef="let row" > {{row.DepTime}}
-                                        </mat-cell>
-                                    </ng-container>
-
-                                    <!-- CRUD Column -->
-                                    <ng-container matColumnDef="crud">
-                                        <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
-                                        <mat-cell *matCellDef="let row" > 
-                                            <button mat-icon-button color="primary" class="pull-right" (click)="openDialog(row)">
-                                                <mat-icon aria-label="Actualizar vuelo">edit</mat-icon>
-                                            </button>
-                                            <button mat-icon-button color="warn" class="pull-right" (click)="deleteFlight(row)">
-                                                <mat-icon aria-label="Eliminar vuelo">delete</mat-icon>
-                                            </button>
-                                        </mat-cell>
-                                    </ng-container>
-
-                                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                                    <mat-row *matRowDef="let row; columns: displayedColumns;">
-                                    </mat-row>
-                                </mat-table>
-
-                                <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
-                            </div>
-                        </div>
-
+                    <highcharts-chart
+                        id="container" 
+                        [Highcharts]="Highcharts"
+                        [constructorType]="chartConstructor"
+                        [options]="chartOptions"
+                        style="width: 100%; height: 400px; display: block;">
+                    </highcharts-chart>
+                
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title text-primary">Vuelos no cancelados según el aeropuerto de salida</h4>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">access_time</i> Desde 1987 hasta 2008
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="col-md-12">
+            <div class="card card-chart">
+                <div class="card-header card-header-warning">
+
+                    <highcharts-chart
+                        id="container14" 
+                        [Highcharts]="Highcharts"
+                        [constructorType]="chartConstructor"
+                        [options]="chartOptions14"
+                        style="width: 100%; height: 400px; display: block;">
+                    </highcharts-chart>
+                
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title text-warning">Vuelos no cancelados segun aeropuertos de llegada </h4>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">access_time</i> Desde 1987 hasta 2008
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
