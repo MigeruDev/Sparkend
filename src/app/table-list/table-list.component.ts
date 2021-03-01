@@ -48,17 +48,21 @@ export class TableListComponent implements OnInit {
   /* ----------==========     Vuelos no cancelados según el aeropuerto de salida   ==========---------- */
   drawQuery13(){
 
-    var q13 = this.rest.getAirportArr();
-
+    var q13: any;
     var dataq13 = [];
 
-    q13.forEach((element) => {
-      dataq13.push({
-        name: element.count,
-        lat: element.lat,
-        lon: element.long
+    this.rest.getAirportArr().subscribe((data: any[]) => {
+      q13 = data;
+      q13.forEach((element) => {
+        dataq13.push({
+          name: element.count,
+          lat: element.lat,
+          lon: element.long
+        });
       });
     });
+
+    
 
     this.chartOptions = {
       chart: {
@@ -165,15 +169,17 @@ export class TableListComponent implements OnInit {
   /* ----------==========     Vuelos no cancelados segun aeropuertos de llegada   ==========---------- */
   drawQuery14(){
 
-    var q14 = this.rest.getAirportDep();
-
+    var q14: any;
     var dataq14 = [];
 
-    q14.forEach((element) => {
-      dataq14.push({
-        name: element.count,
-        lat: element.lat,
-        lon: element.long
+    this.rest.getAirportDep().subscribe((data: any[]) => {
+      q14 = data;
+      q14.forEach((element) => {
+        dataq14.push({
+          name: element.count,
+          lat: element.lat,
+          lon: element.long
+        });
       });
     });
 

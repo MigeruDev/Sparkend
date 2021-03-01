@@ -25,6 +25,12 @@ export class UserProfileComponent implements OnInit {
 
   panelOpenState: boolean = false;
 
+  airport15 = "00M";
+  airport16 = "00R";
+
+  airports15: any;
+  airports16: any;
+
   displayedColumns = ['aerolinea', 'origen', 'destino', 'conteo'];
   displayedColumns12 = ['categoria', 'conteo'];
 
@@ -96,42 +102,20 @@ export class UserProfileComponent implements OnInit {
     seq = 0;
   };
 
-  startAnimationForBarChart(chart, style = {}) {
-    let seq2: any, delays2: any, durations2: any;
-
-    seq2 = 0;
-    delays2 = 80;
-    durations2 = 500;
-    chart.on('draw', function (data) {
-      if (data.type === 'bar') {
-        seq2++;
-        data.element.attr(style);
-        data.element.animate({
-          opacity: {
-            begin: seq2 * delays2,
-            dur: durations2,
-            from: 0,
-            to: 1,
-            easing: 'ease'
-          }
-        });
-      }
-    });
-
-    seq2 = 0;
-  };
-
   ngOnInit() {
-    /* ----------==========     Historico de vuelos por origen/destino    ==========---------- */
-    this.drawQuery15();
 
-    this.drawQuery16();
+    //this.getAirports();
 
     /* ----------==========     Historico de vuelos cancelados por origen/destino    ==========---------- */
     this.drawQuery11();
 
     /* ----------==========     Historico de vuelos no cancelados    ==========---------- */
     this.drawQuery10();
+
+    /* ----------==========     Historico de vuelos por origen/destino    ==========---------- */
+    //this.drawQuery15();
+
+    //this.drawQuery16();
   }
 
   ngAfterViewInit() {
@@ -143,33 +127,28 @@ export class UserProfileComponent implements OnInit {
 
   /* ----------==========     Conteo de retrasos por ruta llegada/salida    ==========---------- */
   getDelayCount() {
-    /*this.rest.getDelayCount(arr_dep).subscribe((data: any[]) => {
-      this.dataSource.data = data
-      console.log(data)
-    });*/
-    this.dataSource8.data = this.rest.getDelayCount("eigth");
-    this.dataSource9.data = this.rest.getDelayCount("ninth");
+    
+    this.rest.getDelayCount('8').subscribe((data: any[]) => {
+      this.dataSource8.data = data;
+    });
+    
+    this.rest.getDelayCount('9').subscribe((data: any[]) => {
+      this.dataSource9.data = data;
+    });
   }
 
   /* ----------==========     Categorias por las que se cancelan    ==========---------- */
   getCategoryCount() {
-    /*this.rest.getCategoryCount(arr_dep).subscribe((data: any[]) => {
-      this.dataSource.data = data
-      console.log(data)
-    });*/
-    this.dataSource12.data = this.rest.getCategoryCount();
+    this.rest.getCategoryCount().subscribe((data: any[]) => {
+      this.dataSource12.data = data;
+    });
   }
 
 
   /* ----------==========     Historico de vuelos no cancelados    ==========---------- */
   drawQuery10() {
 
-    /*this.rest.getDelayCount(arr_dep).subscribe((data: any[]) => {
-      this.dataSource.data = data
-      console.log(data)
-    });*/
-
-    var q10 = this.rest.getNotCancelledFlights();
+    var q10: any;
 
     var dataQuery10 = {
       labels: [],
@@ -178,11 +157,13 @@ export class UserProfileComponent implements OnInit {
       ]
     };
 
-    q10.forEach((element) => {
-      dataQuery10.labels.push(element.Time);
-      dataQuery10.series[0].push(element.count);
-    });
-
+    this.rest.getNotCancelledFlights().subscribe((data: any[]) => {
+      q10 = data;
+      q10.forEach((element) => {
+        dataQuery10.labels.push(element.Time);
+        dataQuery10.series[0].push(element.count);
+      });
+    });    
 
     var optionsQuery10 = {
       axisX: {
@@ -251,14 +232,7 @@ export class UserProfileComponent implements OnInit {
   /* ----------==========     Historico de vuelos cancelados por origen/destino    ==========---------- */
   drawQuery11() {
 
-    /*this.rest.getCancelledFlights(arr_dep).subscribe((data: any[]) => {
-      this.dataSource.data = data
-      console.log(data)
-    });*/
-
-    var q11 = this.rest.getCancelledFlights();
-    q11.sort((a, b) => a.time < b.time ? -1 : a.time > b.time ? 1 : 0);
-
+    var q11: any;
     var dataQuery11 = {
       labels: [],
       series: [
@@ -266,10 +240,15 @@ export class UserProfileComponent implements OnInit {
       ]
     };
 
-    q11.forEach((element) => {
-      dataQuery11.labels.push(element.time);
-      dataQuery11.series[0].push(element.count);
+    this.rest.getCancelledFlights().subscribe((data: any[]) => {
+      q11 = data;
+      q11.forEach((element) => {
+        dataQuery11.labels.push(element.time);
+        dataQuery11.series[0].push(element.count);
+      });
     });
+
+    //q11.sort((a, b) => a.time < b.time ? -1 : a.time > b.time ? 1 : 0);
 
     const optionsQuery11: any = {
       lineSmooth: Chartist.Interpolation.cardinal({
@@ -290,14 +269,7 @@ export class UserProfileComponent implements OnInit {
   /* ----------==========     Historico de vuelos por origen/destino    ==========---------- */
   drawQuery15() {
 
-    /*this.rest.getCancelledFlights(arr_dep).subscribe((data: any[]) => {
-      this.dataSource.data = data
-      console.log(data)
-    });*/
-
-    var q15 = this.rest.getOriginCount();
-    q15.sort((a, b) => a.agno < b.agno ? -1 : a.agno > b.agno ? 1 : 0);
-
+    var q15: any;
 
     var dataQuery15 = {
       labels: [],
@@ -306,10 +278,15 @@ export class UserProfileComponent implements OnInit {
       ]
     };
 
-    q15.forEach((element) => {
-      dataQuery15.labels.push(element.agno);
-      dataQuery15.series[0].push(element.count);
+    this.rest.getOriginCount(this.airport15).subscribe((data: any[]) => {
+      q15 = data;
+      q15.forEach((element) => {
+        dataQuery15.labels.push(element.agno);
+        dataQuery15.series[0].push(element.count);
+      });
     });
+
+    //q15.sort((a, b) => a.agno < b.agno ? -1 : a.agno > b.agno ? 1 : 0);
 
     const optionsQuery15: any = {
       lineSmooth: Chartist.Interpolation.cardinal({
@@ -336,14 +313,7 @@ export class UserProfileComponent implements OnInit {
 
   drawQuery16() {
 
-    /*this.rest.getCancelledFlights(arr_dep).subscribe((data: any[]) => {
-      this.dataSource.data = data
-      console.log(data)
-    });*/
-
-    var q16 = this.rest.getDestinationCount();
-    q16.sort((a, b) => a.agno < b.agno ? -1 : a.agno > b.agno ? 1 : 0);
-
+    var q16: any;
 
     var dataQuery16 = {
       labels: [],
@@ -352,10 +322,15 @@ export class UserProfileComponent implements OnInit {
       ]
     };
 
-    q16.forEach((element) => {
-      dataQuery16.labels.push(element.agno);
-      dataQuery16.series[0].push(element.count);
+    this.rest.getDestinationCount(this.airport16).subscribe((data: any[]) => {
+      q16= data;
+      q16.forEach((element) => {
+        dataQuery16.labels.push(element.agno);
+        dataQuery16.series[0].push(element.count);
+      });
     });
+
+    //q16.sort((a, b) => a.agno < b.agno ? -1 : a.agno > b.agno ? 1 : 0);
 
     const optionsQuery16: any = {
       lineSmooth: Chartist.Interpolation.cardinal({
@@ -378,6 +353,14 @@ export class UserProfileComponent implements OnInit {
 
     // start animation for the Origin Flights History Chart - Line Chart
     this.startAnimationForLineChart(Query16);
+  }
+
+  /* ----------==========     Historico de vuelos por origen/destino    ==========---------- */
+  getAirports(){
+    this.rest.getAirports().subscribe((data: any[]) => {
+      this.airports15 = data;
+      this.airports16 = data;
+    });
   }
 
 
