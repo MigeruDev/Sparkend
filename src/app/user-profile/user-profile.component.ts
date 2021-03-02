@@ -37,6 +37,9 @@ export class UserProfileComponent implements OnInit {
   q10 = [];
   q11 = [];
 
+  q15 = [];
+  q16 = [];
+
   dataSource8: MatTableDataSource<any>;
   dataSource9: MatTableDataSource<any>;
   dataSource12: MatTableDataSource<any>;
@@ -68,8 +71,8 @@ export class UserProfileComponent implements OnInit {
 
     this.getCategoryCount();
     this.getDelayCount();
-    this.getNotCancelledFlights();
-    this.getCancelledFlights();
+    //this.getNotCancelledFlights();
+    //this.getCancelledFlights();    
 
   }
 
@@ -154,7 +157,7 @@ export class UserProfileComponent implements OnInit {
   getNotCancelledFlights() {
     this.rest.getNotCancelledFlights().subscribe((data: any[]) => {
       this.q10 = data;
-      console.log(this.q10);
+      console.log('Estoy agarrando senial krnal',this.q10);
     });  
   }
 
@@ -175,75 +178,77 @@ export class UserProfileComponent implements OnInit {
       ]
     };
 
-    console.log(this.q10);
-
-    this.q10.forEach((element) => {
-      dataQuery10.labels.push(element.Time);
-      dataQuery10.series[0].push(element.count);
-    }); 
-
-    var optionsQuery10 = {
-      axisX: {
-        showGrid: false
-      },
-      axisY: {
-        showLabel: true,
-        scaleMinSpace: 15,
-      },
-      low: 0,
-      high: 2100,
-      chartPadding: { top: 0, right: 5, bottom: 0, left: 0 }
-    };
-
-    var responsiveOptions: any[] = [
-      ['screen and (max-width: 640px)', {
-        seriesBarDistance: 5,
+    this.rest.getNotCancelledFlights().subscribe((data: any[]) => {
+      this.q10 = data;
+      this.q10.forEach((element) => {
+        dataQuery10.labels.push(element.Time);
+        dataQuery10.series[0].push(element.count);
+      }); 
+  
+      var optionsQuery10 = {
         axisX: {
-          labelInterpolationFnc: function (value) {
-            return value[0];
+          showGrid: false
+        },
+        axisY: {
+          showLabel: true,
+          scaleMinSpace: 15,
+        },
+        low: 0,
+        high: 2100,
+        chartPadding: { top: 0, right: 5, bottom: 0, left: 0 }
+      };
+  
+      var responsiveOptions: any[] = [
+        ['screen and (max-width: 640px)', {
+          seriesBarDistance: 5,
+          axisX: {
+            labelInterpolationFnc: function (value) {
+              return value[0];
+            }
           }
+        }]
+      ];
+      var Query10 = new Chartist.Bar('#Query10', dataQuery10, optionsQuery10, responsiveOptions);
+  
+      //start animation for the NotCancelledFlights History Chart
+      let seq2: any, delays2: any, durations2: any;
+  
+      seq2 = 0;
+      delays2 = 80;
+      durations2 = 500;
+      Query10.on('draw', function (data) {
+        if (data.type === 'bar') {
+          seq2++;
+          //setup style settings for line barchart
+          data.element.attr({
+            style: "stroke-width: 5px;"
+          });
+          // We use the group element of the current series to append a simple circle 
+          // with the bar peek coordinates and a circle radius that is depending on the value
+          var circle = new Chartist.Svg('circle', {
+            cx: data.x2,
+            cy: data.y2,
+            r: 5
+          }, 'ct-slice-pie');
+          //setup style settings for lollipop radius
+          data.group.append(circle.attr({
+            style: "fill: rgba(232, 230, 227, 0.95);" +
+              "stroke: rgba(232, 230, 227, 0.95);"
+          }, "style"));
+  
+          data.element.animate({
+            opacity: {
+              begin: seq2 * delays2,
+              dur: durations2,
+              from: 0,
+              to: 1,
+              easing: 'ease'
+            }
+          });
         }
-      }]
-    ];
-    var Query10 = new Chartist.Bar('#Query10', dataQuery10, optionsQuery10, responsiveOptions);
-
-    //start animation for the NotCancelledFlights History Chart
-    let seq2: any, delays2: any, durations2: any;
-
-    seq2 = 0;
-    delays2 = 80;
-    durations2 = 500;
-    Query10.on('draw', function (data) {
-      if (data.type === 'bar') {
-        seq2++;
-        //setup style settings for line barchart
-        data.element.attr({
-          style: "stroke-width: 5px;"
-        });
-        // We use the group element of the current series to append a simple circle 
-        // with the bar peek coordinates and a circle radius that is depending on the value
-        var circle = new Chartist.Svg('circle', {
-          cx: data.x2,
-          cy: data.y2,
-          r: 5
-        }, 'ct-slice-pie');
-        //setup style settings for lollipop radius
-        data.group.append(circle.attr({
-          style: "fill: rgba(232, 230, 227, 0.95);" +
-            "stroke: rgba(232, 230, 227, 0.95);"
-        }, "style"));
-
-        data.element.animate({
-          opacity: {
-            begin: seq2 * delays2,
-            dur: durations2,
-            from: 0,
-            to: 1,
-            easing: 'ease'
-          }
-        });
-      }
-    });
+      });
+      
+    }); 
   }
 
   /* ----------==========     GRAFICAR - Historico de vuelos cancelados por origen/destino    ==========---------- */
@@ -256,33 +261,39 @@ export class UserProfileComponent implements OnInit {
       ]
     };
 
-    this.q11.forEach((element) => {
-      dataQuery11.labels.push(element.time);
-      dataQuery11.series[0].push(element.count);
+    this.rest.getCancelledFlights().subscribe((data: any[]) => {
+      this.q11 = data;
+
+      this.q11.forEach((element) => {
+        dataQuery11.labels.push(element.time);
+        dataQuery11.series[0].push(element.count);
+      });
+  
+      //q11.sort((a, b) => a.time < b.time ? -1 : a.time > b.time ? 1 : 0);
+  
+      const optionsQuery11: any = {
+        lineSmooth: Chartist.Interpolation.cardinal({
+          tension: 0
+        }),
+        low: 0,
+        high: 250,
+        showArea: true,
+        chartPadding: { top: 0, right: 0, bottom: 0, left: 0 }
+      }
+  
+      var Query11 = new Chartist.Line('#Query11', dataQuery11, optionsQuery11);
+  
+      // start animation for the History of Cancelled Flights Chart - Line Chart
+      this.startAnimationForLineChart(Query11);
+
+
     });
 
-    //q11.sort((a, b) => a.time < b.time ? -1 : a.time > b.time ? 1 : 0);
-
-    const optionsQuery11: any = {
-      lineSmooth: Chartist.Interpolation.cardinal({
-        tension: 0
-      }),
-      low: 0,
-      high: 250,
-      showArea: true,
-      chartPadding: { top: 0, right: 0, bottom: 0, left: 0 }
-    }
-
-    var Query11 = new Chartist.Line('#Query11', dataQuery11, optionsQuery11);
-
-    // start animation for the History of Cancelled Flights Chart - Line Chart
-    this.startAnimationForLineChart(Query11);
+    
   }
 
   /* ----------==========     Historico de vuelos por origen/destino    ==========---------- */
   drawQuery15() {
-
-    var q15: any;
 
     var dataQuery15 = {
       labels: [],
@@ -292,41 +303,35 @@ export class UserProfileComponent implements OnInit {
     };
 
     this.rest.getOriginCount(this.airport15).subscribe((data: any[]) => {
-      q15 = data;
-      q15.forEach((element) => {
+      this.q15 = data;
+      this.q15.forEach((element) => {
         dataQuery15.labels.push(element.agno);
         dataQuery15.series[0].push(element.count);
       });
+
+      const optionsQuery15: any = {
+        lineSmooth: Chartist.Interpolation.cardinal({
+          tension: 0,
+          fillHoles: true
+        }),
+        low: 0,
+        high: 250,
+        showArea: true,
+        chartPadding: { top: 0, right: 0, bottom: 0, left: 0 }
+      }
+  
+      var Query15 = new Chartist.Line('#Query15', dataQuery15, optionsQuery15);
+  
+      // start animation for the Origin Flights History Chart - Line Chart
+      this.startAnimationForLineChart(Query15);
     });
 
     //q15.sort((a, b) => a.agno < b.agno ? -1 : a.agno > b.agno ? 1 : 0);
 
-    const optionsQuery15: any = {
-      lineSmooth: Chartist.Interpolation.cardinal({
-        tension: 0,
-        fillHoles: true
-      }),
-      low: 0,
-      high: 250,
-      showArea: true,
-      chartPadding: { top: 0, right: 0, bottom: 0, left: 0 }
-    }
-
-    var plugins = [
-      Chartist.plugins.legend({
-        legendNames: ['Origen', 'Destino']
-      })
-    ];
-
-    var Query15 = new Chartist.Line('#Query15', dataQuery15, optionsQuery15, plugins);
-
-    // start animation for the Origin Flights History Chart - Line Chart
-    this.startAnimationForLineChart(Query15);
+    
   }
 
   drawQuery16() {
-
-    var q16: any;
 
     var dataQuery16 = {
       labels: [],
@@ -336,36 +341,31 @@ export class UserProfileComponent implements OnInit {
     };
 
     this.rest.getDestinationCount(this.airport16).subscribe((data: any[]) => {
-      q16= data;
-      q16.forEach((element) => {
+      this.q16= data;
+      this.q16.forEach((element) => {
         dataQuery16.labels.push(element.agno);
         dataQuery16.series[0].push(element.count);
       });
+      const optionsQuery16: any = {
+        lineSmooth: Chartist.Interpolation.cardinal({
+          tension: 0,
+          fillHoles: true
+        }),
+        low: 0,
+        high: 2050,
+        showArea: true,
+        chartPadding: { top: 0, right: 0, bottom: 0, left: 0 }
+      }
+
+      console.log("estoy agarrando senial krnal", dataQuery16)
+  
+      var Query16 = new Chartist.Line('#Query16', dataQuery16, optionsQuery16);
+  
+      // start animation for the Origin Flights History Chart - Line Chart
+      this.startAnimationForLineChart(Query16);
     });
 
     //q16.sort((a, b) => a.agno < b.agno ? -1 : a.agno > b.agno ? 1 : 0);
-
-    const optionsQuery16: any = {
-      lineSmooth: Chartist.Interpolation.cardinal({
-        tension: 0,
-        fillHoles: true
-      }),
-      low: 0,
-      high: 2050,
-      showArea: true,
-      chartPadding: { top: 0, right: 0, bottom: 0, left: 0 }
-    }
-
-    var plugins = [
-      Chartist.plugins.legend({
-        legendNames: ['Origen', 'Destino']
-      })
-    ];
-
-    var Query16 = new Chartist.Line('#Query16', dataQuery16, optionsQuery16, plugins);
-
-    // start animation for the Origin Flights History Chart - Line Chart
-    this.startAnimationForLineChart(Query16);
   }
 
   /* ----------==========     Historico de vuelos por origen/destino    ==========---------- */

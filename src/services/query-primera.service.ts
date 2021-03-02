@@ -17,19 +17,22 @@ export class QueryPrimeraService {
       map(data => data.map(data => new ConsultaRutas().deserialize(data)))
     );
   }
+  
   public getConsulta2(): Observable<ConsultaRutas[]> {
     var uri = `http://25.10.13.68:3200/consulta2`;
     return this.httpClient.get<ConsultaRutas[]>(uri).pipe(
       map(data => data.map(data => new ConsultaRutas().deserialize(data)))
     );
   }
+
   public getConsulta3(origin:any, dest: any): Observable<ConsultaRuta[]> {
     // var params=`/origin=${origin}/dest=${dest}`;
-    var uri = `http://25.10.13.68:3200/consulta3/origin=${origin}/dest=${dest}`;
+    var uri = 'http://25.10.13.68:3200/consulta3/'+origin+'/'+dest;
     return this.httpClient.get<ConsultaRuta[]>(uri).pipe(
       map(data => data.map(data => new ConsultaRuta().deserialize(data)))
     );
   }
+
   public getConsulta4(): Observable<ConsultaAerolineas[]> {
     var uri = `http://25.10.13.68:3200/consulta4`;
     return this.httpClient.get<ConsultaAerolineas[]>(uri).pipe(
