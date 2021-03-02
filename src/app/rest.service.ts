@@ -17,7 +17,7 @@ var q15 = require('app/queries/result_fifteenth_query.json');
 var q16 = require('app/queries/result_sixteenth_query.json');
 
 // Cambiar por API de pyspark
-const endpoint = 'http://localhost:8000/flights/';
+const endpoint = 'http://25.10.13.68:3200/';
   const httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json'
@@ -35,99 +35,72 @@ export class RestService {
   }
 
   /* ----------==========     Conteo de retrasos por ruta llegada/salida    ==========---------- */
-  getDelayCount(arr_dep): any [] {
-    //return this.http.get(endpoint + 'consulta'+arr_dep).pipe(
-    //  map(this.extractData));
+  getDelayCount(arr_dep): Observable<any>{
+    return this.http.get(endpoint + 'consulta' + arr_dep).pipe(
+      map(this.extractData));
     
-    return (arr_dep === "eigth") ? arr : dep;
+    //return (arr_dep === "eigth") ? arr : dep;
   }
 
   /* ----------==========     Historico de vuelos no cancelados    ==========---------- */
-  getNotCancelledFlights(): any [] {
-    //return this.http.get(endpoint + 'consulta'+arr_dep).pipe(
-    //  map(this.extractData));
+  getNotCancelledFlights(): Observable<any> {
+    return this.http.get(endpoint + 'consulta10').pipe(
+      map(this.extractData));
     
-    return q10;
+    //return q10;
   }
 
   /* ----------==========     Historico de vuelos cancelados por origen/destino    ==========---------- */
-  getCancelledFlights(): any [] {
-    //return this.http.get(endpoint + 'consulta'+arr_dep).pipe(
-    //  map(this.extractData));
+  getCancelledFlights(): Observable<any> {
+    return this.http.get(endpoint + 'consulta11').pipe(
+      map(this.extractData));
     
-    return q11;
+    //return q11;
   }
 
   /* ----------==========     Categorias por las que se cancelan    ==========---------- */
-  getCategoryCount(): any [] {
-    //return this.http.get(endpoint + 'consulta'+arr_dep).pipe(
-    //  map(this.extractData));
+  getCategoryCount(): Observable<any> {
+    return this.http.get(endpoint + 'consulta12').pipe(
+      map(this.extractData));
     
-    return q12;
+    //return q12;
   }
 
   /* ----------==========     Historico de vuelos por origen/destino    ==========---------- */
-  getOriginCount(): any [] {
-    //return this.http.get(endpoint + 'consulta'+arr_dep).pipe(
-    //  map(this.extractData));
+  getOriginCount(arr): Observable<any> {
+    return this.http.get(endpoint + 'consulta15/'+arr).pipe(
+      map(this.extractData));
     
-    return q15;
+    //return q15;
   }
 
-  getDestinationCount(): any [] {
-    //return this.http.get(endpoint + 'consulta'+arr_dep).pipe(
-    //  map(this.extractData));
+  getDestinationCount(dep): Observable<any> {
+    return this.http.get(endpoint + 'consulta16/'+dep).pipe(
+      map(this.extractData));
     
-    return q16;
+    //return q16;
   }
 
   /* ----------==========     Vuelos no cancelados según el aeropuerto de salida   ==========---------- */
-  getAirportArr(): any[] {
-
-    return q13;
+  getAirportArr(): Observable<any> {
+    return this.http.get(endpoint + 'consulta13').pipe(
+      map(this.extractData));
+    //return q13;
   }
 
   /* ----------==========     Vuelos no cancelados segun aeropuertos de llegada   ==========---------- */
-  getAirportDep(): any[] {
-
-    return q14;
-  }
-
-
-
-  
-
-  getFlightNumber(number): Observable<any> {
-    return this.http.get(endpoint + 'number/'+number).pipe(
+  getAirportDep(): Observable<any> {
+    return this.http.get(endpoint + 'consulta14').pipe(
       map(this.extractData));
+    //return q14;
   }
 
-  addNewFlight (flight): Observable<any> {
-    console.log(flight);
-    return this.http.post<any>(endpoint + 'new', JSON.stringify(flight), httpOptions).pipe(
-      tap((flight) => console.log(`generate flights w/ id=${flight}`)),
-      catchError(this.handleError<any>('generar Vuelo'))
-    );
+  /* ----------==========     Obtain All Airports  ==========---------- */
+  getAirports(): Observable<any> {
+    return this.http.get(endpoint + 'airports').pipe(
+      map(this.extractData));
+    //return q14;
   }
-
-  updateFlight (_id, flight): Observable<any> {
-    console.log(flight);
-    return this.http.put<any>(endpoint + 'update/'+_id, JSON.stringify(flight), httpOptions).pipe(
-      tap((flight) => console.log(`generate flights w/ id=${flight}`)),
-      catchError(this.handleError<any>('actualizar Vuelo'))
-    );
-  }  
-
-  deleteFlight (_id): Observable<any> {
-    console.log();
-    return this.http.delete<any>(endpoint + 'delete/'+_id, httpOptions).pipe(
-      tap((flight) => console.log(`delete flight w/ id=${flight}`)),
-      catchError(this.handleError<any>('eliminar vuelo'))
-    );
-
-  }
-
-
 
 
   private handleError<T> (operation = 'operation', result?: T) {

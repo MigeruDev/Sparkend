@@ -96,6 +96,7 @@
         </div>
 
         <!-- Consulta 3 -->
+        
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -103,14 +104,15 @@
                         <h4 class="card-title">Total Retrasos por salida de ruta en especifico</h4>
                     </div>
                     <br>
+                    
                     <div class="container">
                         <div class="row">
                             <div class="col-4">
                                 <mat-form-field appearance="fill">
                                     <mat-label>Seleccione Origen</mat-label>
-                                    <mat-select [(ngModel)]="selectedValueOrigin" name="food">
-                                        <mat-option *ngFor="let food of puntos" [value]="food.value">
-                                            {{food.viewValue}}
+                                    <mat-select [(ngModel)]="selectedValueOrigin" name="point">
+                                        <mat-option *ngFor="let point of puntos" [value]="point.value">
+                                            {{point.viewValue}}
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
@@ -119,8 +121,8 @@
                                 <mat-form-field appearance="fill">
                                     <mat-label>Seleccione Destino</mat-label>
                                     <mat-select [(ngModel)]="selectedValueDest" name="dest_select">
-                                        <mat-option *ngFor="let food of puntos" [value]="food.value">
-                                            {{food.viewValue}}
+                                        <mat-option *ngFor="let point of puntos" [value]="point.value">
+                                            {{point.viewValue}}
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
@@ -131,6 +133,8 @@
                             </div>
                         </div>
                     </div>
+                    
+                    
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="card card-stats">
@@ -167,9 +171,11 @@
                             </div>
                         </div>
                     </div>
+                    
                 </div>
             </div>
         </div>
+        
         <!-- Consulta 4 -->
         <!-- Consulta 5 -->
         <div class="row">

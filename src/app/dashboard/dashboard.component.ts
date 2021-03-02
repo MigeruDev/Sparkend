@@ -29,6 +29,7 @@ export class DashboardComponent implements OnInit {
   public consultaAerolineasSalida: ConsultaAerolineas[];
   public consultaAerolineaMasRetraso: ConsultaAerolinea[];
   public consultaAerolineaMenosRetraso: ConsultaAerolinea[];
+
   public consultaAerolineaMasRetraso1: ConsultaAerolinea;
   public consultaAerolineaMenosRetraso1: ConsultaAerolinea;
   public puntos = [];
@@ -42,8 +43,10 @@ export class DashboardComponent implements OnInit {
   private paginator2: MatPaginator;
   private paginator4: MatPaginator;
   private paginator5: MatPaginator;
+
   displayedColumns = ['origen', 'destino', 'conteo'];
   displayedColumns45 = ['aerolinea', 'conteo'];
+
   @ViewChild('paginator1') set matPaginator1(mp: MatPaginator) {
     this.paginator1 = mp;
     this.dataSource1.paginator = this.paginator1;
@@ -69,6 +72,8 @@ export class DashboardComponent implements OnInit {
     private router: Router, private cdRef: ChangeDetectorRef, private queryPrimeraService: QueryPrimeraService) {
 
     this.puntos=[
+      { value: 'SFO', viewValue: 'SFO' },
+      { value: 'PDX', viewValue: 'PDX' },
       { value: 'ABE', viewValue: 'ABE' },
       { value: 'ABQ', viewValue: 'ABQ' },
       { value: 'ACY', viewValue: 'ACY' },
@@ -91,9 +96,12 @@ export class DashboardComponent implements OnInit {
       { value: 'BWI', viewValue: 'BWI' },
     ];
     
+    this.consultaRutaEspecifico1 = new ConsultaRuta();
+    this.consultaAerolineaMasRetraso1 = new ConsultaAerolinea();
+    this.consultaAerolineaMenosRetraso1 = new ConsultaAerolinea();
 
 
-// unificacion tabla
+    // unificacion tabla
     this.dataSource1 = new MatTableDataSource();
     this.dataSource2 = new MatTableDataSource();
 
@@ -108,7 +116,7 @@ export class DashboardComponent implements OnInit {
 
     this.getConsulta1();
     this.getConsulta2();
-    this.getConsulta3(NaN, NaN);
+    //this.getConsulta3(NaN, NaN);
     this.getConsulta4();
     this.getConsulta5();
     this.getConsulta6();
@@ -139,6 +147,7 @@ export class DashboardComponent implements OnInit {
       this.dataSource2.data = _consultaDestinoRutas;
     });
   }
+
   public getConsulta3(selectedValueOrigin, selectedValueDest) {
     if (selectedValueOrigin== NaN || selectedValueDest== NaN || selectedValueDest == selectedValueOrigin) {
       alert('Error');
@@ -150,6 +159,7 @@ export class DashboardComponent implements OnInit {
     }
 
   }
+
   public getConsulta4() {
     this.queryPrimeraService.getConsulta4().subscribe(_consultaAerolineasLlegada => {
       this.consultaAerolineasLlegada = _consultaAerolineasLlegada;
@@ -157,6 +167,7 @@ export class DashboardComponent implements OnInit {
 
     });
   }
+
   public getConsulta5() {
     this.queryPrimeraService.getConsulta5().subscribe(_consultaAerolineasSalida => {
       this.consultaAerolineasSalida = _consultaAerolineasSalida;
