@@ -11,6 +11,7 @@ from flask_cors import CORS
 
 spark = SparkSession \
     .builder \
+    .master("spark://sparkmaster:7077")\
     .appName("Sparkend") \
     .config("spark.some.config.option", "some-value") \
     .getOrCreate()
@@ -26,7 +27,7 @@ CORS(app)
 #df = spark.read.csv('allyears2k.csv', header='true', inferSchema = True)
 airoports = spark.read.csv('hdfs://hadoop-master:9000/airlines/airports.csv', header='true', inferSchema = True)
 carriers = spark.read.csv('hdfs://hadoop-master:9000/airlines/carriers.csv', header='true', inferSchema = True)
-df = spark.read.csv('allyears2k.csv',header='true', inferSchema = True)
+df = spark.read.csv('hdfs://hadoop-master:9000/airlines/allyears2k.csv',header='true', inferSchema = True)
 
 #airoports = spark.read.csv('airports.csv', header='true', inferSchema = True)
 #carriers = spark.read.csv('carriers.csv', header='true', inferSchema = True)
