@@ -1,6 +1,6 @@
 {
   "name": "sparkend",
-  "version": "0.1.0",
+  "version": "0.2.5",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
