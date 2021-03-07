@@ -132,20 +132,31 @@ export class DashboardComponent implements OnInit {
   
     this.dataSource1.paginator = this.paginator1;
     this.dataSource2.paginator = this.paginator2;
+    this.dataSource4.paginator = this.paginator4;
+    this.dataSource5.paginator = this.paginator5;
     this.cdRef.detectChanges();
   }
 
   public getConsulta1() {
+    /*
     this.queryPrimeraService.getConsulta1().subscribe(_consultaLlegadaRutas => {
       this.consultaRutasLlegada = _consultaLlegadaRutas;
       this.dataSource1.data = _consultaLlegadaRutas;
     });
+    */
+    this.consultaRutasLlegada = this.queryPrimeraService.getConsulta1();
+    this.dataSource1.data = this.queryPrimeraService.getConsulta1();
+
   }
   public getConsulta2() {
+    /*
     this.queryPrimeraService.getConsulta2().subscribe(_consultaDestinoRutas => {
       this.consultaRutasDestino = _consultaDestinoRutas;
       this.dataSource2.data = _consultaDestinoRutas;
     });
+    */
+    this.consultaRutasDestino = this.queryPrimeraService.getConsulta2();
+    this.dataSource2.data = this.queryPrimeraService.getConsulta2();
   }
 
   public getConsulta3(selectedValueOrigin, selectedValueDest) {
@@ -153,40 +164,60 @@ export class DashboardComponent implements OnInit {
       alert('Error');
     } 
     else {
+      /*
       this.queryPrimeraService.getConsulta3(selectedValueOrigin, selectedValueDest).subscribe(_consultaRutaEspecifico => {
         this.consultaRutaEspecifico1 = _consultaRutaEspecifico[0];
       });
+      */
+      this.consultaRutaEspecifico1 = this.queryPrimeraService.getConsulta3(selectedValueOrigin, selectedValueDest)[0];
     }
 
   }
 
   public getConsulta4() {
+    /*
     this.queryPrimeraService.getConsulta4().subscribe(_consultaAerolineasLlegada => {
       this.consultaAerolineasLlegada = _consultaAerolineasLlegada;
       this.dataSource4.data = _consultaAerolineasLlegada;
-
     });
+    */
+    this.consultaAerolineasLlegada = this.queryPrimeraService.getConsulta4();
+    this.dataSource4.data = this.queryPrimeraService.getConsulta4();
   }
 
   public getConsulta5() {
+    /*
     this.queryPrimeraService.getConsulta5().subscribe(_consultaAerolineasSalida => {
       this.consultaAerolineasSalida = _consultaAerolineasSalida;
       this.dataSource5.data = _consultaAerolineasSalida;
-
     });
+    */
+    this.consultaAerolineasSalida = this.queryPrimeraService.getConsulta5();
+    this.dataSource5.data = this.queryPrimeraService.getConsulta5();
   }
+
   public getConsulta6() {
+    /*
     this.queryPrimeraService.getConsulta6().subscribe(_consultaAerolineaMasRetraso => {
       this.consultaAerolineaMasRetraso = _consultaAerolineaMasRetraso;
       this.consultaAerolineaMasRetraso1 = _consultaAerolineaMasRetraso[0];
     });
+    */
+    this.consultaAerolineaMasRetraso = this.queryPrimeraService.getConsulta6();
+    this.consultaAerolineaMasRetraso1 = this.queryPrimeraService.getConsulta6()[0];
   }
+
   public getConsulta7() {
+    /*
     this.queryPrimeraService.getConsulta7().subscribe(_consultaAerolineaMenosRetraso => {
       this.consultaAerolineaMenosRetraso = _consultaAerolineaMenosRetraso;
       this.consultaAerolineaMenosRetraso1 = _consultaAerolineaMenosRetraso[0];
     });
+    */
+    this.consultaAerolineaMenosRetraso = this.queryPrimeraService.getConsulta7();
+    this.consultaAerolineaMenosRetraso1 = this.queryPrimeraService.getConsulta7()[0];
   }
+
   refresh() {
     // Assign the data to the data source for the table to render
     this.dataSource1 = new MatTableDataSource();
