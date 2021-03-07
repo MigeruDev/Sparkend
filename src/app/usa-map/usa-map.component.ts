@@ -14,12 +14,12 @@ var proj4 = require('proj4').default;
  */
 
 @Component({
-  selector: 'app-table-list',
-  templateUrl: './table-list.component.html',
-  styleUrls: ['./table-list.component.css']
+  selector: 'app-usa-map',
+  templateUrl: './usa-map.component.html',
+  styleUrls: ['./usa-map.component.css']
 })
 
-export class TableListComponent implements OnInit {
+export class UsaMapComponent implements OnInit {
 
   panelOpenState: boolean = false;
   Highcharts: typeof Highcharts = Highcharts;

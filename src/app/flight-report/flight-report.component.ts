@@ -13,15 +13,15 @@ require('chartist-plugin-legend');
 import { element } from 'protractor';
 
 @Component({
-  selector: 'app-user-profile',
-  templateUrl: './user-profile.component.html',
-  styleUrls: ['./user-profile.component.css']
+  selector: 'app-flight-report',
+  templateUrl: './flight-report.component.html',
+  styleUrls: ['./flight-report.component.css']
 })
 
 
 
 
-export class UserProfileComponent implements OnInit {
+export class FlightReportComponent implements OnInit {
 
   panelOpenState: boolean = false;
 

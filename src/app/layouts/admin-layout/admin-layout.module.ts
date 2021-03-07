@@ -4,10 +4,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminLayoutRoutes } from './admin-layout.routing';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
-import { UserProfileComponent } from '../../user-profile/user-profile.component';
-import { TableListComponent} from '../../table-list/table-list.component';
-import { MapsComponent } from '../../maps/maps.component';
-import { UpgradeComponent } from '../../upgrade/upgrade.component';
+import { FlightReportComponent } from '../../flight-report/flight-report.component';
+import { UsaMapComponent} from '../../usa-map/usa-map.component';
+import { DevsComponent } from '../../devs/devs.component';
 
 import {
   MatButtonModule,
@@ -48,13 +47,12 @@ import { HighchartsChartModule } from 'highcharts-angular';
   ],
   declarations: [
     DashboardComponent,
-    UserProfileComponent,
-    TableListComponent,
-    MapsComponent,
-    UpgradeComponent,
+    FlightReportComponent,
+    UsaMapComponent,
+    DevsComponent,
   ],
-  entryComponents: [TableListComponent],
-  bootstrap: [TableListComponent],
+  entryComponents: [UsaMapComponent],
+  bootstrap: [UsaMapComponent],
   providers: []
 })
 
