@@ -1,13 +1,13 @@
 import { Routes } from '@angular/router';
 
 import { DashboardComponent } from '../../dashboard/dashboard.component';
-import { UserProfileComponent } from '../../user-profile/user-profile.component';
-import { TableListComponent } from '../../table-list/table-list.component';
-import { UpgradeComponent } from '../../upgrade/upgrade.component';
+import { FlightReportComponent } from '../../flight-report/flight-report.component';
+import { UsaMapComponent } from '../../usa-map/usa-map.component';
+import { DevsComponent } from '../../devs/devs.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
-    { path: 'flight-report',   component: UserProfileComponent },
-    { path: 'usa-map',     component: TableListComponent },
-    { path: 'devs',  component: UpgradeComponent },
+    { path: 'flight-report',   component: FlightReportComponent },
+    { path: 'usa-map',     component: UsaMapComponent },
+    { path: 'devs',  component: DevsComponent },
 ];
