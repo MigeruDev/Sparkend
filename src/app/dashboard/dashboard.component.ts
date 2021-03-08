@@ -33,6 +33,11 @@ export class DashboardComponent implements OnInit {
   public consultaAerolineaMasRetraso1: ConsultaAerolinea;
   public consultaAerolineaMenosRetraso1: ConsultaAerolinea;
   public puntos = [];
+
+  selectedValueOrigin = "";
+  selectedValueDest = "";
+
+
   // Tabla Unificada 
   dataSource1: MatTableDataSource<any>;
   dataSource2: MatTableDataSource<any>;
