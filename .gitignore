@@ -32,3 +32,5 @@ firebase-debug.log*
 
 # Firebase cache
 .firebase/ 
+/.firebase
+.firebase
