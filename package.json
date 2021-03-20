@@ -1,6 +1,6 @@
 {
   "name": "sparkend",
-  "version": "0.1.0",
+  "version": "0.2.5",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -8,7 +8,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "prod": "ng build --prod --base-href=\"./\""
   },
   "private": true,
   "dependencies": {

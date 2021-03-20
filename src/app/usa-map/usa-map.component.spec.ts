@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TableListComponent } from './table-list.component';
+import { UsaMapComponent } from './usa-map.component';
 
-describe('TableListComponent', () => {
-  let component: TableListComponent;
-  let fixture: ComponentFixture<TableListComponent>;
+describe('UsaMapComponent', () => {
+  let component: UsaMapComponent;
+  let fixture: ComponentFixture<UsaMapComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TableListComponent ]
+      declarations: [ UsaMapComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TableListComponent);
+    fixture = TestBed.createComponent(UsaMapComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

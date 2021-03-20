@@ -13,20 +13,20 @@ require('chartist-plugin-legend');
 import { element } from 'protractor';
 
 @Component({
-  selector: 'app-user-profile',
-  templateUrl: './user-profile.component.html',
-  styleUrls: ['./user-profile.component.css']
+  selector: 'app-flight-report',
+  templateUrl: './flight-report.component.html',
+  styleUrls: ['./flight-report.component.css']
 })
 
 
 
 
-export class UserProfileComponent implements OnInit {
+export class FlightReportComponent implements OnInit {
 
   panelOpenState: boolean = false;
 
   airport15 = "00M";
-  airport16 = "00R";
+  airport16 = "SF0";
 
   airports15: any;
   airports16: any;
@@ -71,9 +71,11 @@ export class UserProfileComponent implements OnInit {
 
     this.getCategoryCount();
     this.getDelayCount();
-    //this.getNotCancelledFlights();
-    //this.getCancelledFlights();    
-
+    this.getNotCancelledFlights();
+    this.getCancelledFlights();    
+    this.getAirports();
+    this.getOriginCount(this.airport15);
+    this.getDestinationCount(this.airport16);
   }
 
   
@@ -122,9 +124,11 @@ export class UserProfileComponent implements OnInit {
     this.drawQuery10();
 
     /* ----------==========     Historico de vuelos por origen/destino    ==========---------- */
-    //this.drawQuery15();
+    /* This two draw functions run into problems when using API REST async. For JSON read only, everything's OK */
 
-    //this.drawQuery16();
+    this.drawQuery15();
+
+    this.drawQuery16();
   }
 
   ngAfterViewInit() {
@@ -136,7 +140,7 @@ export class UserProfileComponent implements OnInit {
 
   /* ----------==========     Conteo de retrasos por ruta llegada/salida    ==========---------- */
   getDelayCount() {
-    
+    /*
     this.rest.getDelayCount('8').subscribe((data: any[]) => {
       this.dataSource8.data = data;
     });
@@ -144,28 +148,39 @@ export class UserProfileComponent implements OnInit {
     this.rest.getDelayCount('9').subscribe((data: any[]) => {
       this.dataSource9.data = data;
     });
+    */
+    this.dataSource8.data = this.rest.getDelayCount('8');
+    this.dataSource9.data = this.rest.getDelayCount('9');
   }
 
   /* ----------==========     Categorias por las que se cancelan    ==========---------- */
   getCategoryCount() {
+    /*
     this.rest.getCategoryCount().subscribe((data: any[]) => {
       this.dataSource12.data = data;
     });
+    */
+    this.dataSource12.data = this.rest.getCategoryCount();
   }
 
   /* ----------==========     Historico de vuelos no cancelados    ==========---------- */
   getNotCancelledFlights() {
+    /*
     this.rest.getNotCancelledFlights().subscribe((data: any[]) => {
       this.q10 = data;
-      console.log('Estoy agarrando senial krnal',this.q10);
     });  
+    */
+    this.q10 = this.rest.getNotCancelledFlights();
   }
 
   /* ----------==========     Historico de vuelos cancelados por origen/destino    ==========---------- */
   getCancelledFlights(){
+    /*
     this.rest.getCancelledFlights().subscribe((data: any[]) => {
       this.q11 = data;
     });
+    */
+    this.q11 = this.rest.getCancelledFlights();
   }
 
   /* ----------==========     GRAFICAR - Historico de vuelos no cancelados    ==========---------- */
@@ -178,8 +193,8 @@ export class UserProfileComponent implements OnInit {
       ]
     };
 
-    this.rest.getNotCancelledFlights().subscribe((data: any[]) => {
-      this.q10 = data;
+    //this.rest.getNotCancelledFlights().subscribe((data: any[]) => {
+      //this.q10 = data;
       this.q10.forEach((element) => {
         dataQuery10.labels.push(element.Time);
         dataQuery10.series[0].push(element.count);
@@ -248,7 +263,7 @@ export class UserProfileComponent implements OnInit {
         }
       });
       
-    }); 
+    //}); 
   }
 
   /* ----------==========     GRAFICAR - Historico de vuelos cancelados por origen/destino    ==========---------- */
@@ -261,8 +276,8 @@ export class UserProfileComponent implements OnInit {
       ]
     };
 
-    this.rest.getCancelledFlights().subscribe((data: any[]) => {
-      this.q11 = data;
+    //this.rest.getCancelledFlights().subscribe((data: any[]) => {
+      //this.q11 = data;
 
       this.q11.forEach((element) => {
         dataQuery11.labels.push(element.time);
@@ -287,12 +302,18 @@ export class UserProfileComponent implements OnInit {
       this.startAnimationForLineChart(Query11);
 
 
-    });
+    //});
 
     
   }
 
+
   /* ----------==========     Historico de vuelos por origen/destino    ==========---------- */
+  getOriginCount(airport){
+    this.q15 = this.rest.getOriginCount(airport);
+  }
+
+  /* ----------==========     GRAFICAR - Historico de vuelos por origen/destino    ==========---------- */
   drawQuery15() {
 
     var dataQuery15 = {
@@ -302,8 +323,8 @@ export class UserProfileComponent implements OnInit {
       ]
     };
 
-    this.rest.getOriginCount(this.airport15).subscribe((data: any[]) => {
-      this.q15 = data;
+    //this.rest.getOriginCount(this.airport15).subscribe((data: any[]) => {
+      //this.q15 = data;
       this.q15.forEach((element) => {
         dataQuery15.labels.push(element.agno);
         dataQuery15.series[0].push(element.count);
@@ -324,11 +345,16 @@ export class UserProfileComponent implements OnInit {
   
       // start animation for the Origin Flights History Chart - Line Chart
       this.startAnimationForLineChart(Query15);
-    });
+    //});
 
     //q15.sort((a, b) => a.agno < b.agno ? -1 : a.agno > b.agno ? 1 : 0);
 
     
+  }
+
+  /* ----------==========     Historico de vuelos por origen/destino    ==========---------- */
+  getDestinationCount(airport){
+    this.q16 = this.rest.getDestinationCount(airport);
   }
 
   drawQuery16() {
@@ -340,8 +366,8 @@ export class UserProfileComponent implements OnInit {
       ]
     };
 
-    this.rest.getDestinationCount(this.airport16).subscribe((data: any[]) => {
-      this.q16= data;
+    //this.rest.getDestinationCount(this.airport16).subscribe((data: any[]) => {
+      //this.q16= data;
       this.q16.forEach((element) => {
         dataQuery16.labels.push(element.agno);
         dataQuery16.series[0].push(element.count);
@@ -356,24 +382,26 @@ export class UserProfileComponent implements OnInit {
         showArea: true,
         chartPadding: { top: 0, right: 0, bottom: 0, left: 0 }
       }
-
-      console.log("estoy agarrando senial krnal", dataQuery16)
   
       var Query16 = new Chartist.Line('#Query16', dataQuery16, optionsQuery16);
   
       // start animation for the Origin Flights History Chart - Line Chart
       this.startAnimationForLineChart(Query16);
-    });
+    //});
 
     //q16.sort((a, b) => a.agno < b.agno ? -1 : a.agno > b.agno ? 1 : 0);
   }
 
   /* ----------==========     Historico de vuelos por origen/destino    ==========---------- */
   getAirports(){
+    /*
     this.rest.getAirports().subscribe((data: any[]) => {
       this.airports15 = data;
       this.airports16 = data;
     });
+    */
+    this.airports15 = this.rest.getAirports();
+    this.airports16 = this.rest.getAirports();
   }
 
 

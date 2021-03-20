@@ -1,1 +1,18 @@
-[{"category":"No Definido","count":865},{"category":"Servicios de aviaci\u00f3n nacional","count":47},{"category":"Clima","count":93},{"category":"Aerolinea","count":81}]
+[
+    {
+        "category": "No Definido",
+        "count": 865
+    },
+    {
+        "category": "Servicios de aviaci\u00f3n nacional",
+        "count": 47
+    },
+    {
+        "category": "Clima",
+        "count": 93
+    },
+    {
+        "category": "Aerolinea",
+        "count": 81
+    }
+]

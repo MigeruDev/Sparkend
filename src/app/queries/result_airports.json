@@ -1,0 +1,26 @@
+[
+    {
+        "code": "00M",
+        "airport": "Thigpen"
+    },
+    {
+        "code": "SFO",
+        "airport": "San Francisco"
+    },
+    {
+        "code": "6R3",
+        "airport": "Cleveland Municipal"
+    },
+    {
+        "code": "6R7",
+        "airport": "Old Harbor"
+    },
+    {
+        "code": "ACY",
+        "airport": "Atlantic City International"
+    },
+    {
+        "code": "AEX",
+        "airport": "Alexandria International"
+    }
+]

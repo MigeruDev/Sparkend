@@ -14,12 +14,12 @@ var proj4 = require('proj4').default;
  */
 
 @Component({
-  selector: 'app-table-list',
-  templateUrl: './table-list.component.html',
-  styleUrls: ['./table-list.component.css']
+  selector: 'app-usa-map',
+  templateUrl: './usa-map.component.html',
+  styleUrls: ['./usa-map.component.css']
 })
 
-export class TableListComponent implements OnInit {
+export class UsaMapComponent implements OnInit {
 
   panelOpenState: boolean = false;
   Highcharts: typeof Highcharts = Highcharts;
@@ -34,7 +34,8 @@ export class TableListComponent implements OnInit {
 
   constructor(public rest:RestService, private route: ActivatedRoute, 
     public dialog: MatDialog, private router: Router) {
-
+      this.getAirportArr();
+      this.getAirportDep();
   }
 
 
@@ -48,12 +49,35 @@ export class TableListComponent implements OnInit {
   }
 
   /* ----------==========     Vuelos no cancelados según el aeropuerto de salida   ==========---------- */
+  getAirportArr() {
+    /*
+    this.rest.getAirportArr().subscribe((data: any[]) => {
+      this.q13 = data;
+    });
+    */
+    this.q13 = this.rest.getAirportArr();
+  }
+
+
+  /* ----------==========     Vuelos no cancelados segun aeropuertos de llegada   ==========---------- */
+  getAirportDep(){
+    /*
+    this.rest.getAirportDep().subscribe((data: any[]) => {
+      this.q14 = data;
+    });
+    */
+    this.q14 = this.rest.getAirportDep();
+  }
+
+
+
+  /* ----------==========     GRAFICAR - Vuelos no cancelados según el aeropuerto de salida   ==========---------- */
   drawQuery13(){
 
     var dataq13 = [];
 
-    this.rest.getAirportArr().subscribe((data: any[]) => {
-      this.q13 = data;
+    //this.rest.getAirportArr().subscribe((data: any[]) => {
+      //this.q13 = data;
       this.q13.forEach((element) => {
         dataq13.push({
           name: element.count,
@@ -162,16 +186,16 @@ export class TableListComponent implements OnInit {
           }
         ]
       };
-    });
+    //});
   }
 
-  /* ----------==========     Vuelos no cancelados segun aeropuertos de llegada   ==========---------- */
+  /* ----------==========     GRAFICAR - Vuelos no cancelados segun aeropuertos de llegada   ==========---------- */
   drawQuery14(){
 
     var dataq14 = [];
 
-    this.rest.getAirportDep().subscribe((data: any[]) => {
-      this.q14 = data;
+    //this.rest.getAirportDep().subscribe((data: any[]) => {
+      //this.q14 = data;
       this.q14.forEach((element) => {
         dataq14.push({
           name: element.count,
@@ -281,6 +305,7 @@ export class TableListComponent implements OnInit {
         ]
       };
 
-    });    
+    //});    
   }
+
 }
