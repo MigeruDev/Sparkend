@@ -28,8 +28,8 @@ If you like this Repo, Please click the :star:
   - [Getting Started](#getting-started)
   - [Usage](#usage)
   - [Roadmap](#roadmap)
-  - [License](#:pencil:-license)
-  - [Contact](#:man_astronaut:-contact)
+  - [License](#license)
+  - [Contact](#contact)
   - [Acknowledgements](#acknowledgements)
 
   <!-- GETTING STARTED -->
@@ -145,14 +145,14 @@ See the [open issues](https://github.com/TheWorstOne/Sparkend/issues) for a list
 
 
 <!-- LICENSE -->
-## :pencil: License
+## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
 
 
 
 <!-- CONTACT -->
-## :man_astronaut: Contact
+## Contact
 
 Miguel Ángel Macías - 👨‍💻[Linkedin](https://www.linkedin.com/in/mangelladev/)
 
