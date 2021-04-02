@@ -9,7 +9,7 @@
 <a href="https://github.com/TheWorstOne/Sparkend/blob/master/LICENSE"><img src="https://img.shields.io/github/license/TheWorstOne/Sparkend?color=2b9348" alt="License Badge"/></a>
 </div>
 <br>
-<p align="center"><i>Interested in the project? Please visit my <a href="https://github.com/TheWorstOne/">website</a></i></p>
+<p align="center"><i>Interested in the project? Please visit my <a target="_blank" href="https://mangelladev.web.app/">website</a></i></p>
 <br>
 
 <!-- ABOUT THE PROJECT -->
@@ -156,7 +156,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 Miguel Ángel Macías - 👨‍💻[Linkedin](https://www.linkedin.com/in/mangelladev/)
 
-My Personal Website: ✨[TBD](https://github.com/TheWorstOne/)
+My Personal Website: ✨[mangelladev.com](https://mangelladev.web.app/)
 
 
 <!-- ACKNOWLEDGEMENTS -->
